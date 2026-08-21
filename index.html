@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Surendra Kumar Reddy Polaka — Embedded Systems & Robotics Engineer</title>
+<meta name="description" content="Portfolio of Surendra Kumar Reddy Polaka — embedded firmware, industrial robotics and AI safety verification projects.">
+
+<!--
+  ============================================================
+  HOW TO ADD YOUR OWN PHOTOS / VIDEOS
+  ============================================================
+  1. Create a folder called "media" next to this index.html file.
+  2. Drop your images (.jpg/.png) and video clips (.mp4) inside it.
+  3. Scroll down to the "PROJECT DATA" section in the <script> at the
+     bottom of this file. Each project has a `media` field like:
+
+        media: { type: 'placeholder' }
+
+     Replace it with:
+
+        media: { type: 'image', src: 'media/clamp-rig.jpg' }
+     or
+        media: { type: 'video', src: 'media/clamp-rig.mp4' }
+
+  4. Save, and the placeholder box will be replaced by your real media,
+     with a working click-to-expand lightbox already wired up.
+  ============================================================
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg: #12151a;
+    --bg-alt: #171b21;
+    --panel: #1b2028;
+    --panel-border: #2a3038;
+    --text: #e9e7e0;
+    --text-dim: #838b96;
+    --text-dimmer: #565d68;
+    --amber: #ffb020;
+    --teal: #4fd1c5;
+    --danger-off: #3a3f47;
+
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  ::selection{ background: var(--amber); color:#12151a; }
+
+  a{ color:inherit; text-decoration:none; }
+
+  img, video{ max-width:100%; display:block; }
+
+  :focus-visible{
+    outline: 2px solid var(--teal);
+    outline-offset: 3px;
+  }
+
+  .wrap{
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  .mono{ font-family: var(--font-mono); }
+
+  .eyebrow{
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--amber);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom: 18px;
+  }
+  .eyebrow::before{
+    content:'';
+    width:7px; height:7px;
+    border-radius:50%;
+    background: var(--amber);
+    box-shadow: 0 0 8px var(--amber);
+    flex-shrink:0;
+  }
+
+  section{ padding: 96px 0; border-bottom: 1px solid var(--panel-border); }
+  section:last-of-type{ border-bottom:none; }
+
+  h2.section-title{
+    font-family: var(--font-display);
+    font-weight:600;
+    font-size: clamp(28px, 4vw, 40px);
+    letter-spacing: -0.01em;
+    margin-bottom: 48px;
+    display:flex;
+    align-items:baseline;
+    gap:16px;
+  }
+  h2.section-title .idx{
+    font-family: var(--font-mono);
+    font-size:15px;
+    color: var(--text-dimmer);
+    font-weight:400;
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position: sticky; top:0; z-index:50;
+    background: rgba(18,21,26,0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--panel-border);
+  }
+  nav.wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height:64px;
+  }
+  .nav-id{
+    font-family: var(--font-mono);
+    font-size:13px;
+    color: var(--text-dim);
+    letter-spacing:0.02em;
+  }
+  .nav-id b{ color: var(--text); font-weight:600; }
+  .nav-links{
+    display:flex; gap:28px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+  }
+  .nav-links a{
+    color: var(--text-dim);
+    transition: color .2s ease;
+    position:relative;
+  }
+  .nav-links a:hover{ color: var(--amber); }
+  .nav-links a.contact-link{ color: var(--amber); }
+  .nav-toggle{ display:none; }
+
+  @media (max-width: 720px){
+    .nav-links{ display:none; }
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding-top: 72px;
+    padding-bottom: 56px;
+    border-bottom: 1px solid var(--panel-border);
+    position:relative;
+    overflow:hidden;
+  }
+  .status-line{
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    color: var(--text-dim);
+    display:flex; align-items:center; gap:10px;
+    margin-bottom: 40px;
+    letter-spacing:0.03em;
+  }
+  .status-dot{
+    width:8px; height:8px; border-radius:50%;
+    background: var(--teal);
+    box-shadow: 0 0 8px var(--teal);
+    animation: blink 2.2s ease-in-out infinite;
+    flex-shrink:0;
+  }
+  @keyframes blink{ 0%,100%{opacity:1;} 50%{opacity:.35;} }
+
+  .hero h1{
+    font-family: var(--font-display);
+    font-weight:700;
+    font-size: clamp(36px, 6vw, 64px);
+    line-height:1.04;
+    letter-spacing:-0.02em;
+    max-width: 900px;
+  }
+  .hero h1 .role{
+    display:block;
+    color: var(--amber);
+    font-size: 0.5em;
+    font-weight:500;
+    margin-top:14px;
+    letter-spacing:0;
+  }
+
+  .hero p.lede{
+    margin-top: 28px;
+    max-width: 620px;
+    font-size: 17px;
+    color: var(--text-dim);
+  }
+
+  .hero-cta{
+    margin-top: 40px;
+    display:flex; gap:16px; flex-wrap:wrap;
+  }
+  .btn{
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing:0.04em;
+    text-transform: uppercase;
+    padding: 13px 22px;
+    border-radius: 3px;
+    cursor:pointer;
+    transition: all .2s ease;
+    display:inline-flex; align-items:center; gap:8px;
+  }
+  .btn-primary{
+    background: var(--amber);
+    color: #12151a;
+    border: 1px solid var(--amber);
+    font-weight:600;
+  }
+  .btn-primary:hover{ background:#ffc352; }
+  .btn-outline{
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--panel-border);
+  }
+  .btn-outline:hover{ border-color: var(--teal); color: var(--teal); }
+
+  /* waveform */
+  .scope{
+    margin-top: 64px;
+    border: 1px solid var(--panel-border);
+    background: var(--bg-alt);
+    border-radius: 4px;
+    padding: 18px 20px 14px;
+  }
+  .scope-head{
+    display:flex; justify-content:space-between; align-items:center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-dimmer);
+    letter-spacing: 0.08em;
+    text-transform:uppercase;
+    margin-bottom:10px;
+  }
+  .scope-head span.live{ color: var(--teal); }
+  .scope svg{ width:100%; height:90px; display:block; }
+  .scope-trace{
+    fill:none;
+    stroke: var(--teal);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    filter: drop-shadow(0 0 4px rgba(79,209,197,0.5));
+  }
+  .scope-trace-setpoint{
+    fill:none;
+    stroke: var(--text-dimmer);
+    stroke-width:1;
+    stroke-dasharray: 4 5;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .status-dot{ animation:none; }
+    #scopePath{ animation:none !important; }
+  }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{
+    display:grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 56px;
+  }
+  @media (max-width: 860px){ .about-grid{ grid-template-columns: 1fr; } }
+
+  .about-text p{ color: var(--text-dim); margin-bottom:18px; font-size:15.5px; }
+  .about-text p:first-child{ color: var(--text); font-size:17px; }
+
+  .datasheet{
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: 4px;
+    overflow:hidden;
+  }
+  .datasheet-head{
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--panel-border);
+    font-family: var(--font-mono);
+    font-size:11px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color: var(--text-dimmer);
+    display:flex; justify-content:space-between;
+  }
+  .datasheet-row{
+    display:flex; justify-content:space-between;
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--panel-border);
+    font-size: 13.5px;
+  }
+  .datasheet-row:last-child{ border-bottom:none; }
+  .datasheet-row .k{ color: var(--text-dim); font-family: var(--font-mono); font-size:12.5px; }
+  .datasheet-row .v{ color: var(--text); text-align:right; font-weight:500; }
+
+  /* ---------- EXPERIENCE ---------- */
+  .timeline{ position:relative; }
+  .tl-item{
+    display:grid;
+    grid-template-columns: 130px 1fr;
+    gap: 32px;
+    padding-bottom: 48px;
+    position:relative;
+  }
+  .tl-item:last-child{ padding-bottom:0; }
+  .tl-item::before{
+    content:'';
+    position:absolute;
+    left:130px; top:6px; bottom:-6px;
+    width:1px;
+    background: var(--panel-border);
+    margin-left: 15px;
+  }
+  .tl-item:last-child::before{ display:none; }
+  .tl-date{
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    color: var(--text-dim);
+    padding-top: 4px;
+  }
+  .tl-marker{
+    position:absolute;
+    left: 130px; margin-left: 11px; top:6px;
+    width:9px; height:9px; border-radius:50%;
+    background: var(--bg);
+    border: 2px solid var(--teal);
+  }
+  .tl-body{ padding-left: 24px; }
+  .tl-role{
+    font-family: var(--font-display);
+    font-size: 19px; font-weight:600;
+    margin-bottom:2px;
+  }
+  .tl-org{
+    font-size: 13.5px;
+    color: var(--amber);
+    font-family: var(--font-mono);
+    margin-bottom: 14px;
+  }
+  .tl-body ul{ padding-left: 18px; color: var(--text-dim); font-size: 14.5px; }
+  .tl-body li{ margin-bottom:7px; }
+
+  @media (max-width: 640px){
+    .tl-item{ grid-template-columns: 1fr; gap:8px; }
+    .tl-item::before, .tl-marker{ display:none; }
+  }
+
+  /* ---------- PROJECTS ---------- */
+  .proj-grid{
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+  }
+  @media (max-width: 780px){ .proj-grid{ grid-template-columns: 1fr; } }
+
+  .proj-card{
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: 5px;
+    overflow:hidden;
+    display:flex; flex-direction:column;
+    transition: border-color .2s ease, transform .2s ease;
+  }
+  .proj-card:hover{ border-color: var(--teal); }
+
+  .proj-media{
+    aspect-ratio: 16/10;
+    background:
+      repeating-linear-gradient(135deg, #20262f 0 2px, transparent 2px 14px);
+    border-bottom: 1px solid var(--panel-border);
+    position: relative;
+    cursor: pointer;
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
+  }
+  .proj-media img, .proj-media video{
+    width:100%; height:100%; object-fit:cover;
+  }
+  .proj-media.has-media:hover{ opacity:0.92; }
+  .placeholder-tag{
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-dimmer);
+    border: 1px dashed var(--panel-border);
+    padding: 8px 14px;
+    border-radius: 3px;
+    background: rgba(18,21,26,0.5);
+  }
+  .expand-hint{
+    position:absolute; bottom:10px; right:10px;
+    font-family: var(--font-mono);
+    font-size:10px; letter-spacing:0.06em; text-transform:uppercase;
+    color: var(--bg);
+    background: var(--teal);
+    padding: 4px 8px; border-radius:2px;
+    opacity:0; transition: opacity .2s ease;
+  }
+  .proj-media.has-media:hover .expand-hint{ opacity:1; }
+
+  .proj-body{ padding: 20px 22px 22px; flex:1; display:flex; flex-direction:column; }
+  .proj-top{
+    display:flex; justify-content:space-between; align-items:flex-start;
+    margin-bottom: 10px;
+  }
+  .proj-title{
+    font-family: var(--font-display);
+    font-size: 18px; font-weight:600;
+  }
+  .proj-rev{
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--text-dimmer);
+    white-space:nowrap;
+    padding-top:3px;
+  }
+  .proj-status{
+    display:inline-flex; align-items:center; gap:6px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    color: var(--teal);
+    margin-bottom: 12px;
+  }
+  .proj-status i{
+    width:6px; height:6px; border-radius:50%;
+    background: var(--teal);
+    box-shadow: 0 0 6px var(--teal);
+  }
+  .proj-desc{ color: var(--text-dim); font-size: 14px; margin-bottom: 16px; flex:1; }
+  .proj-tags{ display:flex; flex-wrap:wrap; gap:7px; }
+  .tag{
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    padding: 4px 9px;
+    border: 1px solid var(--panel-border);
+    border-radius: 20px;
+    color: var(--text-dim);
+  }
+
+  /* ---------- SKILLS ---------- */
+  .skills-grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 32px;
+  }
+  .skill-group-title{
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    color: var(--amber);
+    margin-bottom: 16px;
+  }
+  .skill-chip-row{ display:flex; flex-wrap:wrap; gap:8px; }
+  .chip{
+    font-size: 13.5px;
+    padding: 7px 13px;
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: 3px;
+    color: var(--text);
+  }
+
+  /* ---------- EDUCATION / CERTS ---------- */
+  .edu-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+  @media (max-width: 780px){ .edu-grid{ grid-template-columns: 1fr; } }
+  .edu-item{ margin-bottom: 24px; }
+  .edu-item:last-child{ margin-bottom:0; }
+  .edu-degree{ font-family: var(--font-display); font-size:16.5px; font-weight:600; }
+  .edu-school{ color: var(--amber); font-size:13.5px; font-family: var(--font-mono); margin: 3px 0; }
+  .edu-date{ color: var(--text-dimmer); font-size:12.5px; font-family: var(--font-mono); }
+
+  .lang-row{ display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid var(--panel-border); font-size:14px; }
+  .lang-row:last-child{ border-bottom:none; }
+  .lang-level{ font-family: var(--font-mono); color: var(--teal); font-size:12.5px; }
+
+  /* ---------- CONTACT / FOOTER ---------- */
+  footer{ padding: 80px 0 40px; }
+  .contact-inner{
+    display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:40px;
+    margin-bottom: 56px;
+  }
+  .contact-inner h2{
+    font-family: var(--font-display);
+    font-size: clamp(28px,4vw,44px);
+    font-weight:600;
+    max-width: 560px;
+    line-height:1.15;
+  }
+  .contact-links{ display:flex; flex-direction:column; gap:12px; }
+  .contact-links a{
+    font-family: var(--font-mono);
+    font-size: 14.5px;
+    color: var(--text-dim);
+    display:flex; align-items:center; gap:10px;
+    transition: color .2s ease;
+  }
+  .contact-links a:hover{ color: var(--amber); }
+  .contact-links a::before{ content:'→'; color: var(--teal); }
+
+  .footer-bottom{
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;
+    padding-top: 24px; border-top:1px solid var(--panel-border);
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--text-dimmer);
+  }
+
+  /* ---------- LIGHTBOX ---------- */
+  .lightbox{
+    position:fixed; inset:0; background: rgba(10,12,15,0.92);
+    display:none; align-items:center; justify-content:center;
+    z-index: 100; padding: 40px;
+  }
+  .lightbox.open{ display:flex; }
+  .lightbox-content{ max-width: 900px; max-height: 85vh; width:100%; }
+  .lightbox-content img, .lightbox-content video{ width:100%; max-height:85vh; object-fit:contain; border-radius:4px; }
+  .lightbox-close{
+    position:fixed; top:28px; right:32px;
+    font-family: var(--font-mono);
+    color: var(--text-dim);
+    background:none; border: 1px solid var(--panel-border);
+    width:38px; height:38px; border-radius:4px;
+    cursor:pointer; font-size:18px;
+  }
+  .lightbox-close:hover{ color: var(--amber); border-color: var(--amber); }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <div class="nav-id mono"><b>S.K.R. POLAKA</b> // embedded &amp; robotics</div>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact" class="contact-link">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero wrap">
+  <div class="status-line">
+    <span class="status-dot"></span>
+    SYS.STATUS: OPEN_TO_RELOCATE — IT&nbsp;/&nbsp;DE&nbsp;/&nbsp;NL&nbsp;/&nbsp;BE
+  </div>
+
+  <h1>
+    Surendra Kumar Reddy Polaka
+    <span class="role">Embedded Systems &amp; Robotics Engineer</span>
+  </h1>
+
+  <p class="lede">
+    I build real-time control systems and intelligent automation for industrial hardware —
+    from PID motor loops and CAN-bus torque control to robot–sensor integration and
+    reinforcement-learning safety verification.
+  </p>
+
+  <div class="hero-cta">
+    <a href="#projects" class="btn btn-primary">View Projects</a>
+    <a href="#contact" class="btn btn-outline">Get in Touch</a>
+  </div>
+
+  <div class="scope">
+    <div class="scope-head">
+      <span>PID LOOP — CLAMP FORCE FEEDBACK</span>
+      <span class="live">● LIVE TRACE</span>
+    </div>
+    <svg viewBox="0 0 800 90" preserveAspectRatio="none">
+      <line x1="0" y1="45" x2="800" y2="45" class="scope-trace-setpoint"/>
+      <path id="scopePath" class="scope-trace" d=""/>
+    </svg>
+  </div>
+</section>
+
+<section id="about" class="wrap">
+  <h2 class="section-title"><span class="idx">01 /</span> About</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>I'm an embedded systems and robotics engineer focused on real-time control and intelligent automation for industrial applications.</p>
+      <p>At MOLLFAM Fabbrica Automatica Srl I develop embedded firmware in C/C++ for motor and sensor control — working with DC/BLDC motors, PID, PWM, H-bridge drivers, encoder and Hall-sensor feedback, and CAN, I2C, SPI and UART communication. My work also spans industrial robotics, including Mitsubishi RV‑2F‑D pick-and-place automation, Keyence sensor integration, and RTOS-based embedded systems.</p>
+      <p>My background also reaches into AI and intelligent robotics: at the University of Genoa I worked with Python, PyTorch and TensorFlow on neural networks, deep learning, and reinforcement-learning safety verification using NeVer2.</p>
+    </div>
+
+    <div class="datasheet">
+      <div class="datasheet-head"><span>PROFILE</span><span>DATASHEET</span></div>
+      <div class="datasheet-row"><span class="k">LOCATION</span><span class="v">Milan, Italy</span></div>
+      <div class="datasheet-row"><span class="k">WORK PERMIT</span><span class="v">Italian (Permanent Residency)</span></div>
+      <div class="datasheet-row"><span class="k">NATIONALITY</span><span class="v">Indian</span></div>
+      <div class="datasheet-row"><span class="k">MSC</span><span class="v">Robotics Engineering — Univ. of Genoa</span></div>
+      <div class="datasheet-row"><span class="k">BENG</span><span class="v">Electrical &amp; Electronics — Vel Tech Univ.</span></div>
+      <div class="datasheet-row"><span class="k">LANGUAGES</span><span class="v">English C2 · Italian A2</span></div>
+      <div class="datasheet-row"><span class="k">TARGET REGIONS</span><span class="v">IT · DE · NL · BE</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="experience" class="wrap">
+  <h2 class="section-title"><span class="idx">02 /</span> Experience</h2>
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-date mono">06/2024 —<br>Current</div>
+      <div class="tl-marker"></div>
+      <div class="tl-body">
+        <div class="tl-role">Embedded Systems &amp; Robotics Engineer</div>
+        <div class="tl-org">MOLLFAM Fabbrica Automatica Srl — Milan, Italy</div>
+        <ul>
+          <li>Developed industrial clamp control firmware integrating motor drivers, encoder feedback, EEPROM configuration and a touchscreen interface (ST7789 + XPT2046).</li>
+          <li>Designed a DC motor clamp control system using a VNH7012AY driver, implementing PID control with Hall-sensor feedback for accurate force and position control.</li>
+          <li>Integrated a Mitsubishi RV‑2F‑D industrial robot with Keyence sensors for high-speed pick-and-place automation in production.</li>
+          <li>Developing a brushless motor control system using EPOS 24/5 over CAN bus, interfacing with an Arduino Uno R4 for precise torque control.</li>
+          <li>Manage Microsoft 365 administration and IT support, resolving connectivity, network and software issues across the company.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-date mono">2019 —<br>2022</div>
+      <div class="tl-marker"></div>
+      <div class="tl-body">
+        <div class="tl-role">Master's Thesis — Neural Network Verification</div>
+        <div class="tl-org">University of Genoa — Genoa, Italy</div>
+        <ul>
+          <li>Built and trained deep learning models using PyTorch and TensorFlow, with data processing in SciPy, Pandas and NumPy.</li>
+          <li>Worked with the NeVer2 tool for verifying the safety of reinforcement-learning policies.</li>
+          <li>Explored neural network architectures and deep learning techniques applied to robotics-relevant safety problems.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-date mono">Genoa,<br>Italy</div>
+      <div class="tl-marker"></div>
+      <div class="tl-body">
+        <div class="tl-role">Robotics Engineer Intern</div>
+        <div class="tl-org">Genoa, Italy</div>
+        <ul>
+          <li>Programmed and commissioned robots, with particular focus on collaborative robots, using RESTful APIs.</li>
+          <li>Contributed to strategic research on Text-to-Speech synthesis, improving naturalness, expressiveness and efficiency.</li>
+          <li>Worked on Kibi, a sensor-driven virtual assistant for elderly and special-needs users — enhancing its dialog management system for more intuitive, personalized interaction.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="projects" class="wrap">
+  <h2 class="section-title"><span class="idx">03 /</span> Projects</h2>
+  <div class="proj-grid" id="projGrid"></div>
+</section>
+
+<section id="skills" class="wrap">
+  <h2 class="section-title"><span class="idx">04 /</span> Skills</h2>
+  <div class="skills-grid">
+    <div>
+      <div class="skill-group-title">Languages</div>
+      <div class="skill-chip-row">
+        <span class="chip">C</span><span class="chip">C++</span><span class="chip">Python</span>
+      </div>
+    </div>
+    <div>
+      <div class="skill-group-title">Hardware &amp; Protocols</div>
+      <div class="skill-chip-row">
+        <span class="chip">PID Control</span><span class="chip">PWM</span><span class="chip">CAN</span>
+        <span class="chip">I2C</span><span class="chip">SPI</span><span class="chip">UART</span>
+        <span class="chip">H-Bridge Drivers</span><span class="chip">Encoder / Hall Feedback</span>
+      </div>
+    </div>
+    <div>
+      <div class="skill-group-title">Systems &amp; Tools</div>
+      <div class="skill-chip-row">
+        <span class="chip">Linux</span><span class="chip">ROS</span><span class="chip">RTOS</span>
+        <span class="chip">Git / GitHub</span><span class="chip">Microsoft 365 Admin</span>
+      </div>
+    </div>
+    <div>
+      <div class="skill-group-title">AI &amp; Deep Learning</div>
+      <div class="skill-chip-row">
+        <span class="chip">PyTorch</span><span class="chip">TensorFlow</span><span class="chip">NeVer2</span>
+        <span class="chip">NumPy / Pandas / SciPy</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="education" class="wrap">
+  <h2 class="section-title"><span class="idx">05 /</span> Education &amp; Certifications</h2>
+  <div class="edu-grid">
+    <div>
+      <div class="edu-item">
+        <div class="edu-degree">MSc, Robotics Engineering</div>
+        <div class="edu-school">Università degli Studi di Genova</div>
+        <div class="edu-date">2019 — 2022</div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-degree">B.Tech, Electrical &amp; Electronics Engineering</div>
+        <div class="edu-school">Vel Tech Technical University</div>
+        <div class="edu-date">2014 — 2018</div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-degree">Certifications</div>
+        <div class="edu-school">Udemy — Python Programming · Udemy — Artificial Intelligence</div>
+      </div>
+    </div>
+    <div class="datasheet">
+      <div class="datasheet-head"><span>LANGUAGE SKILLS</span><span>CEFR</span></div>
+      <div style="padding: 6px 18px;">
+        <div class="lang-row"><span>English — Listening / Reading / Speaking / Writing</span><span class="lang-level">C2</span></div>
+        <div class="lang-row"><span>Italian — Listening / Reading</span><span class="lang-level">A2</span></div>
+        <div class="lang-row"><span>Italian — Speaking / Writing</span><span class="lang-level">A2</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact" class="wrap">
+  <div class="contact-inner">
+    <h2>Building real-time systems for industrial automation — let's talk about your next project.</h2>
+    <div class="contact-links">
+      <a href="mailto:spolaka918@gmail.com">spolaka918@gmail.com</a>
+      <a href="tel:+393429438586">+39 342 943 8586</a>
+      <a href="https://www.linkedin.com/in/polaka-surendra" target="_blank" rel="noopener">linkedin.com/in/polaka-surendra</a>
+      <a href="https://github.com/PolakaSurendra" target="_blank" rel="noopener">github.com/PolakaSurendra</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Surendra Kumar Reddy Polaka</span>
+    <span>Milan, Italy</span>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close">✕</button>
+  <div class="lightbox-content" id="lightboxContent"></div>
+</div>
+
+<script>
+  /* ---------------- PROJECT DATA ----------------
+     Replace each `media` object below with your own image/video
+     once you've added files to a "media" folder. See the comment
+     block at the top of this file for details.
+  ------------------------------------------------- */
+  const projects = [
+    {
+      rev: "REV. 01",
+      status: "IN PRODUCTION",
+      title: "Industrial Clamp Control System",
+      desc: "DC motor clamp control using a VNH7012AY driver with PID control and Hall-sensor feedback for precise force and position control, plus a touchscreen HMI (ST7789 + XPT2046) and EEPROM-backed configuration.",
+      tags: ["C/C++", "PID", "VNH7012AY", "EEPROM", "Touchscreen HMI"],
+      media: { type: "placeholder" }
+    },
+    {
+      rev: "REV. 02",
+      status: "IN PRODUCTION",
+      title: "Robotic Pick-and-Place Automation",
+      desc: "Integrated a Mitsubishi RV-2F-D industrial robot with Keyence sensors to drive high-speed pick-and-place automation on a live production line.",
+      tags: ["Mitsubishi RV-2F-D", "Keyence Sensors", "Industrial Robotics"],
+      media: { type: "placeholder" }
+    },
+    {
+      rev: "REV. 03",
+      status: "IN DEVELOPMENT",
+      title: "CAN-Bus Brushless Torque Control",
+      desc: "Brushless motor control system built around an EPOS 24/5 controller communicating over CAN bus, interfaced with an Arduino Uno R4 for precise torque control.",
+      tags: ["CAN Bus", "EPOS 24/5", "BLDC", "Arduino Uno R4"],
+      media: { type: "placeholder" }
+    },
+    {
+      rev: "REV. 04",
+      status: "MSc THESIS",
+      title: "Neural Network Verification for Safe RL",
+      desc: "Master's thesis on verifying the safety of reinforcement-learning policies using the NeVer2 tool — building, training and analyzing deep learning models in PyTorch and TensorFlow.",
+      tags: ["PyTorch", "TensorFlow", "NeVer2", "Reinforcement Learning"],
+      media: { type: "placeholder" }
+    },
+    {
+      rev: "REV. 05",
+      status: "RESEARCH",
+      title: "Kibi — Assistive Virtual Assistant",
+      desc: "A sensor-driven virtual assistant for elderly and special-needs users. Contributed to dialog management and Text-to-Speech research to make interactions more natural and personalized.",
+      tags: ["RESTful API", "Text-to-Speech", "Collaborative Robots"],
+      media: { type: "placeholder" }
+    },
+  ];
+
+  const grid = document.getElementById('projGrid');
+
+  projects.forEach((p, i) => {
+    const card = document.createElement('div');
+    card.className = 'proj-card';
+
+    let mediaInner = `<span class="placeholder-tag">+ ADD PHOTO / VIDEO</span>`;
+    let hasMedia = false;
+    if (p.media.type === 'image') {
+      mediaInner = `<img src="${p.media.src}" alt="${p.title}"><span class="expand-hint">Expand</span>`;
+      hasMedia = true;
+    } else if (p.media.type === 'video') {
+      mediaInner = `<video src="${p.media.src}" muted loop autoplay playsinline></video><span class="expand-hint">Expand</span>`;
+      hasMedia = true;
+    }
+
+    card.innerHTML = `
+      <div class="proj-media ${hasMedia ? 'has-media' : ''}" data-idx="${i}">${mediaInner}</div>
+      <div class="proj-body">
+        <div class="proj-top">
+          <div class="proj-title">${p.title}</div>
+          <div class="proj-rev mono">${p.rev}</div>
+        </div>
+        <div class="proj-status"><i></i>${p.status}</div>
+        <div class="proj-desc">${p.desc}</div>
+        <div class="proj-tags">${p.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+
+  // Lightbox
+  const lightbox = document.getElementById('lightbox');
+  const lightboxContent = document.getElementById('lightboxContent');
+
+  grid.addEventListener('click', (e) => {
+    const mediaEl = e.target.closest('.proj-media.has-media');
+    if (!mediaEl) return;
+    const p = projects[mediaEl.dataset.idx];
+    if (p.media.type === 'image') {
+      lightboxContent.innerHTML = `<img src="${p.media.src}" alt="${p.title}">`;
+    } else if (p.media.type === 'video') {
+      lightboxContent.innerHTML = `<video src="${p.media.src}" controls autoplay></video>`;
+    }
+    lightbox.classList.add('open');
+  });
+
+  function closeLightbox(){
+    lightbox.classList.remove('open');
+    lightboxContent.innerHTML = '';
+  }
+  document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+
+  // Animated oscilloscope trace (decorative — represents a PID-controlled signal settling)
+  const scopePath = document.getElementById('scopePath');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function genTrace(offset){
+    let d = 'M0,45';
+    const points = 80;
+    for (let i = 1; i <= points; i++){
+      const x = (800 / points) * i;
+      const settle = Math.max(0, 1 - i / (points * 0.65));
+      const noise = Math.sin((i + offset) * 0.55) * 14 * settle + Math.sin((i + offset) * 0.13) * 6 * settle;
+      const y = 45 - noise;
+      d += ` L${x.toFixed(1)},${y.toFixed(1)}`;
+    }
+    return d;
+  }
+
+  if (scopePath){
+    let frame = 0;
+    scopePath.setAttribute('d', genTrace(0));
+    if (!reduceMotion){
+      setInterval(() => {
+        frame += 3;
+        scopePath.setAttribute('d', genTrace(frame));
+      }, 90);
+    }
+  }
+</script>
+
+</body>
+</html>
