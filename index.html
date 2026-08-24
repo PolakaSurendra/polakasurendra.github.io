@@ -418,6 +418,14 @@
     opacity:0; transition: opacity .2s ease;
   }
   .proj-media.has-media:hover .expand-hint{ opacity:1; }
+  .media-count{
+    position:absolute; top:10px; left:10px;
+    font-size:10px; letter-spacing:0.08em; text-transform:uppercase;
+    color: var(--text);
+    background: rgba(18,21,26,0.8);
+    border: 1px solid var(--panel-border);
+    padding: 4px 8px; border-radius:2px;
+  }
 
   .proj-body{ padding: 20px 22px 22px; flex:1; display:flex; flex-direction:column; }
   .proj-top{
@@ -541,7 +549,21 @@
   }
   .lightbox.open{ display:flex; }
   .lightbox-content{ max-width: 900px; max-height: 85vh; width:100%; }
-  .lightbox-content img, .lightbox-content video{ width:100%; max-height:85vh; object-fit:contain; border-radius:4px; }
+  .lightbox-content img, .lightbox-content video{ width:100%; max-height:78vh; object-fit:contain; border-radius:4px; }
+  .lightbox-bar{
+    display:flex; align-items:center; justify-content:center; gap:22px;
+    margin-top: 16px;
+  }
+  .lb-counter{ font-size:12.5px; color: var(--text-dim); letter-spacing:0.04em; }
+  .lb-nav{
+    font-family: var(--font-mono);
+    font-size:12px; letter-spacing:0.05em; text-transform:uppercase;
+    color: var(--text-dim);
+    background:none; border:1px solid var(--panel-border);
+    padding: 8px 14px; border-radius:3px; cursor:pointer;
+    transition: color .2s ease, border-color .2s ease;
+  }
+  .lb-nav:hover{ color: var(--amber); border-color: var(--amber); }
   .lightbox-close{
     position:fixed; top:28px; right:32px;
     font-family: var(--font-mono);
@@ -826,17 +848,18 @@
       rev: "REV. 06",
       status: "UNIVERSITY",
       title: "EMG-Based Analysis of Motor Adaptation to a Force Field",
-      desc: "Analyzed muscle activity and hand-movement trajectories during a robotic reaching task to quantify how motor adaptation and after-effects emerge under a novel force field" ,
-      tags: ["MATLAB , Signal Processing , EMG Analysis , Motor Control , Data Visualization"],
+      desc: "Analyzed muscle activity and hand-movement trajectories during a robotic reaching task to quantify how motor adaptation and after-effects emerge under a novel force field.",
+      tags: ["MATLAB", "Signal Processing", "EMG Analysis", "Motor Control", "Data Visualization"],
       media: {
         type: "gallery",
         images: [
-             {  src: " image1.jpg" } ,
-             {  src: " image2.jpg" } ,
-             {  src: " image3.jpg" } ,
-             {  src: " image4.jpg" } ,  
-         ]
-    },
+          { src: "media/image1.jpg" },
+          { src: "media/image2.jpg" },
+          { src: "media/image3.jpg" },
+          { src: "media/image4.jpg" }
+        ]
+      }
+    }
   ];
 
   const grid = document.getElementById('projGrid');
@@ -852,6 +875,11 @@
       hasMedia = true;
     } else if (p.media.type === 'video') {
       mediaInner = `<video src="${p.media.src}" muted loop autoplay playsinline></video><span class="expand-hint">Expand</span>`;
+      hasMedia = true;
+    } else if (p.media.type === 'gallery' && p.media.images && p.media.images.length) {
+      mediaInner = `<img src="${p.media.images[0].src}" alt="${p.title}">
+        <span class="media-count mono">${p.media.images.length} photos</span>
+        <span class="expand-hint">Expand</span>`;
       hasMedia = true;
     }
 
@@ -874,25 +902,61 @@
   const lightbox = document.getElementById('lightbox');
   const lightboxContent = document.getElementById('lightboxContent');
 
+  let gallery = [];      // images currently open in the lightbox
+  let galleryIdx = 0;
+
+  function renderGallery(){
+    const img = gallery[galleryIdx];
+    lightboxContent.innerHTML = `
+      <img src="${img.src}" alt="${img.caption || ''}">
+      <div class="lightbox-bar">
+        <button class="lb-nav" data-step="-1" aria-label="Previous">‹ Prev</button>
+        <span class="lb-counter mono">${galleryIdx + 1} / ${gallery.length}${img.caption ? ' — ' + img.caption : ''}</span>
+        <button class="lb-nav" data-step="1" aria-label="Next">Next ›</button>
+      </div>`;
+  }
+
+  function stepGallery(step){
+    if (gallery.length < 2) return;
+    galleryIdx = (galleryIdx + step + gallery.length) % gallery.length;
+    renderGallery();
+  }
+
   grid.addEventListener('click', (e) => {
     const mediaEl = e.target.closest('.proj-media.has-media');
     if (!mediaEl) return;
     const p = projects[mediaEl.dataset.idx];
+    gallery = [];
     if (p.media.type === 'image') {
       lightboxContent.innerHTML = `<img src="${p.media.src}" alt="${p.title}">`;
     } else if (p.media.type === 'video') {
       lightboxContent.innerHTML = `<video src="${p.media.src}" controls autoplay></video>`;
+    } else if (p.media.type === 'gallery') {
+      gallery = p.media.images;
+      galleryIdx = 0;
+      renderGallery();
     }
     lightbox.classList.add('open');
+  });
+
+  lightboxContent.addEventListener('click', (e) => {
+    const nav = e.target.closest('.lb-nav');
+    if (nav) stepGallery(Number(nav.dataset.step));
   });
 
   function closeLightbox(){
     lightbox.classList.remove('open');
     lightboxContent.innerHTML = '';
+    gallery = [];
   }
   document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
   lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') stepGallery(-1);
+    if (e.key === 'ArrowRight') stepGallery(1);
+  });
 
   // Animated oscilloscope trace (decorative — represents a PID-controlled signal settling)
   const scopePath = document.getElementById('scopePath');
