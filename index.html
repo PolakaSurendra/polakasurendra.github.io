@@ -25,6 +25,28 @@
 
   4. Save, and the placeholder box will be replaced by your real media,
      with a working click-to-expand lightbox already wired up.
+
+  ============================================================
+  HOW TO ATTACH CODE / DOCUMENTS TO A PROJECT
+  ============================================================
+  1. Each project keeps its files in "projects/<project>/", split into
+     "code/" and "docs/". Kibi already has projects/kibi/code and
+     projects/kibi/docs — copy that layout for other projects.
+  2. Drop your files in (avoid spaces in file names).
+  3. In the "PROJECT DATA" section below, add a `files` array to that
+     project:
+
+        files: [
+          { name: "Dialog manager", path: "projects/kibi/code/dialog_manager.py" },
+          { name: "TTS notes", path: "projects/kibi/docs/tts-notes.pdf", note: "1.2 MB" }
+        ]
+
+     `name` and `note` are optional labels; `path` is what matters.
+  4. Commit and push. A collapsible "Code & documents" section appears on
+     the card. Projects without a `files` array look exactly as before.
+
+  Note: GitHub blocks files over 100 MB, and this is a public repo — only
+  put here what you're happy for anyone to download.
   ============================================================
 -->
 
@@ -469,6 +491,70 @@
     transition: border-color .2s ease;
   }
   .proj-link:hover{ border-bottom-color: var(--teal); }
+
+  /* ---------- PROJECT FILES ---------- */
+  .proj-files{
+    border-top: 1px solid var(--panel-border);
+    margin-bottom: 16px;
+    padding-top: 12px;
+  }
+  .proj-files > summary{
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color .2s ease;
+  }
+  .proj-files > summary::-webkit-details-marker{ display:none; }
+  .proj-files > summary:hover{ color: var(--teal); }
+  .proj-files > summary::before{
+    content: "▸";
+    font-size: 10px;
+    transition: transform .2s ease;
+  }
+  .proj-files[open] > summary::before{ transform: rotate(90deg); }
+  .file-list{ list-style:none; margin-top: 10px; display:flex; flex-direction:column; gap:6px; }
+  .file-list a{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    font-size: 13px;
+    color: var(--text-dim);
+    padding: 5px 8px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    transition: color .2s ease, border-color .2s ease, background .2s ease;
+  }
+  .file-list a:hover{
+    color: var(--text);
+    background: var(--bg-alt);
+    border-color: var(--panel-border);
+  }
+  .file-ext{
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 0.05em;
+    padding: 2px 6px;
+    border-radius: 3px;
+    border: 1px solid var(--panel-border);
+    color: var(--amber);
+    flex-shrink: 0;
+    min-width: 42px;
+    text-align: center;
+  }
+  .file-note{
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-dimmer);
+    margin-left: auto;
+    flex-shrink: 0;
+  }
   .proj-tags{ display:flex; flex-wrap:wrap; gap:7px; }
   .tag{
     font-family: var(--font-mono);
@@ -868,7 +954,13 @@
           { src: "media/kibi.png"} 
           ]
       },
-      externalUrl: "https://kibi.tech/"
+      externalUrl: "https://kibi.tech/",
+      /* Files live in projects/kibi/code and projects/kibi/docs.
+         Drop a file in one of those folders, then add a line here. */
+      files: [
+        // { name: "Dialog manager", path: "projects/kibi/code/dialog_manager.py" },
+        // { name: "TTS research notes", path: "projects/kibi/docs/tts-notes.pdf", note: "1.2 MB" },
+      ]
     },
     {
       rev: "REV. 06",
@@ -889,6 +981,25 @@
   ];
 
   const grid = document.getElementById('projGrid');
+
+  // Builds the "Files" block for a project. Returns "" when the project has none.
+  function renderFiles(p){
+    const files = (p.files || []).filter(f => f && f.path);
+    if (!files.length) return "";
+    const items = files.map(f => {
+      const ext = (f.path.split('.').pop() || 'file').toUpperCase().slice(0, 5);
+      const name = f.name || f.path.split('/').pop();
+      return `<li><a href="${f.path}" target="_blank" rel="noopener">
+        <span class="file-ext mono">${ext}</span>
+        <span>${name}</span>
+        ${f.note ? `<span class="file-note">${f.note}</span>` : ''}
+      </a></li>`;
+    }).join('');
+    return `<details class="proj-files">
+      <summary>Code &amp; documents (${files.length})</summary>
+      <ul class="file-list">${items}</ul>
+    </details>`;
+  }
 
   projects.forEach((p, i) => {
     const card = document.createElement('div');
@@ -923,6 +1034,7 @@
         <div class="proj-status"><i></i>${p.status}</div>
         <div class="proj-desc">${p.desc}</div>
         ${linkHtml}
+        ${renderFiles(p)}
         <div class="proj-tags">${p.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
       </div>
     `;
