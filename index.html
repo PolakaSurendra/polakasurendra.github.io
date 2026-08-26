@@ -977,9 +977,7 @@
 
 <script>
   /* ---------------- PROJECT DATA ----------------
-     Replace each `media` object below with your own image/video
-     once you've added files to a "media" folder. See the comment
-     block at the top of this file for details.
+   
   ------------------------------------------------- */
   const projects = [
     {
@@ -988,7 +986,15 @@
       title: "Industrial Clamp Control System",
       desc: "DC motor clamp control using a VNH7012AY driver with PID control and Hall-sensor feedback for precise force and position control, plus a touchscreen HMI (ST7789 + XPT2046) and EEPROM-backed configuration.",
       tags: ["C/C++", "PID", "VNH7012AY", "EEPROM", "Touchscreen HMI"],
-      media: { type: "placeholder" }
+      media: {
+        type: "gallery",
+        images: [
+          { src: "media/Industrial1.jpeg" },
+          { src: "media/Industrial2.jpeg" }
+               
+        ]
+      }
+      
     },
     {
       rev: "REV. 02",
