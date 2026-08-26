@@ -6,61 +6,6 @@
 <title>Surendra Kumar Reddy Polaka — Embedded Systems & Robotics Engineer</title>
 <meta name="description" content="Portfolio of Surendra Kumar Reddy Polaka — embedded firmware, industrial robotics and AI safety verification projects.">
 
-<!--
-  ============================================================
-  HOW TO ADD YOUR OWN PHOTOS / VIDEOS
-  ============================================================
-  1. Create a folder called "media" next to this index.html file.
-  2. Drop your images (.jpg/.png) and video clips (.mp4) inside it.
-  3. Scroll down to the "PROJECT DATA" section in the <script> at the
-     bottom of this file. Each project has a `media` field like:
-
-        media: { type: 'placeholder' }
-
-     Replace it with:
-
-        media: { type: 'image', src: 'media/clamp-rig.jpg' }
-     or
-        media: { type: 'video', src: 'media/clamp-rig.mp4' }
-
-  4. Save, and the placeholder box will be replaced by your real media,
-     with a working click-to-expand lightbox already wired up.
-
-  ============================================================
-  HOW TO ATTACH CODE / DOCUMENTS TO A PROJECT
-  ============================================================
-  1. Each project keeps its files in "projects/<project>/", split into
-     "code/" and "docs/". Kibi already has projects/kibi/code and
-     projects/kibi/docs — copy that layout for other projects.
-  2. Drop your files in (avoid spaces in file names).
-  3. In the "PROJECT DATA" section below, add a `files` array to that
-     project:
-
-        files: [
-          { name: "Dialog manager", path: "projects/kibi/code/dialog_manager.py" },
-          { name: "TTS notes", path: "projects/kibi/docs/tts-notes.pdf", note: "1.2 MB" }
-        ]
-
-     `name` and `note` are optional labels; `path` is what matters.
-  4. Commit and push. A collapsible "Code & documents" section appears on
-     the card. Projects without a `files` array look exactly as before.
-
-  Clicking a file behaves differently by type (see VIEWERS / OPEN_IN_TAB
-  in the <script> below to change this):
-    - code & text (.py .c .cpp .ino .js .json .m .sh .txt .md ...)
-        opens inside the page in a read-only, syntax-highlighted, line-
-        numbered viewer — no download prompt.
-    - pdf, images & audio/video (.pdf .png .jpg .gif .svg .mp4 .mp3 ...)
-        open in a new browser tab, which renders them natively.
-    - everything else (.zip .docx .xlsx ...)
-        downloads, since the browser can't display it anyway.
-  Every file also gets a "Download" button inside the viewer.
-
-  Note: GitHub blocks files over 100 MB, and this is a public repo — only
-  put here what you're happy for anyone to download.
-  ============================================================
--->
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -270,43 +215,8 @@
   }
   .btn-outline:hover{ border-color: var(--teal); color: var(--teal); }
 
-  /* waveform */
-  .scope{
-    margin-top: 64px;
-    border: 1px solid var(--panel-border);
-    background: var(--bg-alt);
-    border-radius: 4px;
-    padding: 18px 20px 14px;
-  }
-  .scope-head{
-    display:flex; justify-content:space-between; align-items:center;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--text-dimmer);
-    letter-spacing: 0.08em;
-    text-transform:uppercase;
-    margin-bottom:10px;
-  }
-  .scope-head span.live{ color: var(--teal); }
-  .scope svg{ width:100%; height:90px; display:block; }
-  .scope-trace{
-    fill:none;
-    stroke: var(--teal);
-    stroke-width: 1.6;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    filter: drop-shadow(0 0 4px rgba(79,209,197,0.5));
-  }
-  .scope-trace-setpoint{
-    fill:none;
-    stroke: var(--text-dimmer);
-    stroke-width:1;
-    stroke-dasharray: 4 5;
-  }
-
   @media (prefers-reduced-motion: reduce){
     .status-dot{ animation:none; }
-    #scopePath{ animation:none !important; }
   }
 
   /* ---------- ABOUT ---------- */
@@ -787,17 +697,6 @@
   <div class="hero-cta">
     <a href="#projects" class="btn btn-primary">View Projects</a>
     <a href="#contact" class="btn btn-outline">Get in Touch</a>
-  </div>
-
-  <div class="scope">
-    <div class="scope-head">
-      <span>PID LOOP — CLAMP FORCE FEEDBACK</span>
-      <span class="live">● LIVE TRACE</span>
-    </div>
-    <svg viewBox="0 0 800 90" preserveAspectRatio="none">
-      <line x1="0" y1="45" x2="800" y2="45" class="scope-trace-setpoint"/>
-      <path id="scopePath" class="scope-trace" d=""/>
-    </svg>
   </div>
 </section>
 
@@ -1352,33 +1251,6 @@
     if (e.key === 'ArrowRight') stepGallery(1);
   });
 
-  // Animated oscilloscope trace (decorative — represents a PID-controlled signal settling)
-  const scopePath = document.getElementById('scopePath');
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  function genTrace(offset){
-    let d = 'M0,45';
-    const points = 80;
-    for (let i = 1; i <= points; i++){
-      const x = (800 / points) * i;
-      const settle = Math.max(0, 1 - i / (points * 0.65));
-      const noise = Math.sin((i + offset) * 0.55) * 14 * settle + Math.sin((i + offset) * 0.13) * 6 * settle;
-      const y = 45 - noise;
-      d += ` L${x.toFixed(1)},${y.toFixed(1)}`;
-    }
-    return d;
-  }
-
-  if (scopePath){
-    let frame = 0;
-    scopePath.setAttribute('d', genTrace(0));
-    if (!reduceMotion){
-      setInterval(() => {
-        frame += 3;
-        scopePath.setAttribute('d', genTrace(frame));
-      }, 90);
-    }
-  }
 </script>
 
 </body>
