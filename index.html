@@ -1036,8 +1036,6 @@
           ]
       },
       externalUrl: "https://kibi.tech/",
-      /* Files live in projects/kibi/code and projects/kibi/docs.
-         Drop a file in one of those folders, then add a line here. */
       files: [
         {  path: "projects/kibi/code/main.py" },
         {  path: "projects/kibi/Test.mp4"  }
@@ -1061,74 +1059,6 @@
     }
   ];
 
-  const grid = document.getElementById('projGrid');
-
-  // Builds the "Files" block for a project. Returns "" when the project has none.
-  // 'view' files open inside the lightbox as highlighted text; 'open' files
-  // (pdf/image) get a normal new-tab link; everything else downloads.
-  function fileLinkAttrs(path){
-    return fileAction(path) === 'download' ? 'download' : 'target="_blank" rel="noopener"';
-  }
-
-  function renderFiles(p){
-    const files = (p.files || []).filter(f => f && f.path);
-    if (!files.length) return "";
-    const items = files.map(f => {
-      const ext = (f.path.split('.').pop() || 'file').toUpperCase().slice(0, 5);
-      const name = f.name || f.path.split('/').pop();
-      return `<li><a href="${f.path}" data-path="${f.path}" data-name="${escHtml(name)}" ${fileLinkAttrs(f.path)}>
-        <span class="file-ext mono">${ext}</span>
-        <span>${name}</span>
-        ${f.note ? `<span class="file-note">${f.note}</span>` : ''}
-      </a></li>`;
-    }).join('');
-    return `<details class="proj-files">
-      <summary>Code &amp; documents (${files.length})</summary>
-      <ul class="file-list">${items}</ul>
-    </details>`;
-  }
-
-  projects.forEach((p, i) => {
-    const card = document.createElement('div');
-    card.className = 'proj-card';
-
-    let mediaInner = `<span class="placeholder-tag">+ ADD PHOTO / VIDEO</span>`;
-    let hasMedia = false;
-    if (p.media.type === 'image') {
-      mediaInner = `<img src="${p.media.src}" alt="${p.title}"><span class="expand-hint">Expand</span>`;
-      hasMedia = true;
-    } else if (p.media.type === 'video') {
-      mediaInner = `<video src="${p.media.src}" muted loop autoplay playsinline></video><span class="expand-hint">Expand</span>`;
-      hasMedia = true;
-    } else if (p.media.type === 'gallery' && p.media.images && p.media.images.length) {
-      mediaInner = `<img src="${p.media.images[0].src}" alt="${p.title}">
-        <span class="media-count mono">${p.media.images.length} photos</span>
-        <span class="expand-hint">Expand</span>`;
-      hasMedia = true;
-    }
-
-    const linkHtml = p.externalUrl
-      ? `<a class="proj-link" href="${p.externalUrl}" target="_blank" rel="noopener">Visit project site &#8599;</a>`
-      : "";
-
-    card.innerHTML = `
-      <div class="proj-media ${hasMedia ? 'has-media' : ''}" data-idx="${i}">${mediaInner}</div>
-      <div class="proj-body">
-        <div class="proj-top">
-          <div class="proj-title">${p.title}</div>
-          <div class="proj-rev mono">${p.rev}</div>
-        </div>
-        <div class="proj-status"><i></i>${p.status}</div>
-        <div class="proj-desc">${p.desc}</div>
-        ${linkHtml}
-        ${renderFiles(p)}
-        <div class="proj-tags">${p.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
-      </div>
-    `;
-    grid.appendChild(card);
-  });
-
-  // Lightbox
   /* ---------------- CODE / DOCUMENT VIEWER ----------------
      Text files open inside the page (line numbers + syntax highlighting)
      instead of downloading. PDFs and images open in a new tab; anything
@@ -1279,6 +1209,74 @@
     }
   }
 
+  const grid = document.getElementById('projGrid');
+
+  // Builds the "Files" block for a project. Returns "" when the project has none.
+  // 'view' files open inside the lightbox as highlighted text; 'open' files
+  // (pdf/image) get a normal new-tab link; everything else downloads.
+  function fileLinkAttrs(path){
+    return fileAction(path) === 'download' ? 'download' : 'target="_blank" rel="noopener"';
+  }
+
+  function renderFiles(p){
+    const files = (p.files || []).filter(f => f && f.path);
+    if (!files.length) return "";
+    const items = files.map(f => {
+      const ext = (f.path.split('.').pop() || 'file').toUpperCase().slice(0, 5);
+      const name = f.name || f.path.split('/').pop();
+      return `<li><a href="${f.path}" data-path="${f.path}" data-name="${escHtml(name)}" ${fileLinkAttrs(f.path)}>
+        <span class="file-ext mono">${ext}</span>
+        <span>${name}</span>
+        ${f.note ? `<span class="file-note">${f.note}</span>` : ''}
+      </a></li>`;
+    }).join('');
+    return `<details class="proj-files">
+      <summary>Code &amp; documents (${files.length})</summary>
+      <ul class="file-list">${items}</ul>
+    </details>`;
+  }
+
+  projects.forEach((p, i) => {
+    const card = document.createElement('div');
+    card.className = 'proj-card';
+
+    let mediaInner = `<span class="placeholder-tag">+ ADD PHOTO / VIDEO</span>`;
+    let hasMedia = false;
+    if (p.media.type === 'image') {
+      mediaInner = `<img src="${p.media.src}" alt="${p.title}"><span class="expand-hint">Expand</span>`;
+      hasMedia = true;
+    } else if (p.media.type === 'video') {
+      mediaInner = `<video src="${p.media.src}" muted loop autoplay playsinline></video><span class="expand-hint">Expand</span>`;
+      hasMedia = true;
+    } else if (p.media.type === 'gallery' && p.media.images && p.media.images.length) {
+      mediaInner = `<img src="${p.media.images[0].src}" alt="${p.title}">
+        <span class="media-count mono">${p.media.images.length} photos</span>
+        <span class="expand-hint">Expand</span>`;
+      hasMedia = true;
+    }
+
+    const linkHtml = p.externalUrl
+      ? `<a class="proj-link" href="${p.externalUrl}" target="_blank" rel="noopener">Visit project site &#8599;</a>`
+      : "";
+
+    card.innerHTML = `
+      <div class="proj-media ${hasMedia ? 'has-media' : ''}" data-idx="${i}">${mediaInner}</div>
+      <div class="proj-body">
+        <div class="proj-top">
+          <div class="proj-title">${p.title}</div>
+          <div class="proj-rev mono">${p.rev}</div>
+        </div>
+        <div class="proj-status"><i></i>${p.status}</div>
+        <div class="proj-desc">${p.desc}</div>
+        ${linkHtml}
+        ${renderFiles(p)}
+        <div class="proj-tags">${p.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+
+  // Lightbox
   const lightbox = document.getElementById('lightbox');
   const lightboxContent = document.getElementById('lightboxContent');
 
