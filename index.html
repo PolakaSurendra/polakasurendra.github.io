@@ -45,6 +45,17 @@
   4. Commit and push. A collapsible "Code & documents" section appears on
      the card. Projects without a `files` array look exactly as before.
 
+  Clicking a file behaves differently by type (see VIEWERS / OPEN_IN_TAB
+  in the <script> below to change this):
+    - code & text (.py .c .cpp .ino .js .json .m .sh .txt .md ...)
+        opens inside the page in a read-only, syntax-highlighted, line-
+        numbered viewer — no download prompt.
+    - pdf, images & audio/video (.pdf .png .jpg .gif .svg .mp4 .mp3 ...)
+        open in a new browser tab, which renders them natively.
+    - everything else (.zip .docx .xlsx ...)
+        downloads, since the browser can't display it anyway.
+  Every file also gets a "Download" button inside the viewer.
+
   Note: GitHub blocks files over 100 MB, and this is a public repo — only
   put here what you're happy for anyone to download.
   ============================================================
@@ -670,6 +681,76 @@
     cursor:pointer; font-size:18px;
   }
   .lightbox-close:hover{ color: var(--amber); border-color: var(--amber); }
+
+  /* ---------- CODE VIEWER (inside lightbox) ---------- */
+  .lightbox-content.is-code{ max-width: 1000px; width: 100%; }
+  .code-viewer{
+    background: var(--bg-alt);
+    border: 1px solid var(--panel-border);
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    max-height: 78vh;
+  }
+  .code-viewer-bar{
+    display:flex; align-items:center; gap:10px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--panel-border);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+  .code-viewer-bar .cv-name{ color: var(--text); font-weight:500; }
+  .code-viewer-bar .cv-size{ color: var(--text-dimmer); }
+  .code-viewer-bar .cv-spacer{ flex:1; }
+  .cv-btn{
+    font-family: var(--font-mono);
+    font-size: 11px; letter-spacing:0.04em;
+    color: var(--text-dim);
+    background:none; border:1px solid var(--panel-border);
+    padding: 6px 11px; border-radius:3px; cursor:pointer;
+    transition: color .2s ease, border-color .2s ease;
+  }
+  .cv-btn:hover{ color: var(--amber); border-color: var(--amber); }
+  .code-viewer-body{
+    overflow:auto;
+    display:flex;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    line-height: 1.6;
+  }
+  .code-gutter{
+    padding: 14px 12px;
+    text-align:right;
+    color: var(--text-dimmer);
+    user-select:none;
+    white-space:pre;
+    border-right: 1px solid var(--panel-border);
+    flex-shrink:0;
+    position: sticky;
+    left: 0;
+    background: var(--bg-alt);
+  }
+  .code-pre{
+    margin:0;
+    padding: 14px 16px;
+    white-space:pre;
+    color: var(--text);
+    flex:1;
+    min-width:0;
+  }
+  .code-viewer-note{
+    padding: 10px 14px;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--text-dimmer);
+    border-top: 1px solid var(--panel-border);
+  }
+  .t-comment{ color: var(--text-dimmer); font-style:italic; }
+  .t-string{ color: var(--teal); }
+  .t-number{ color: var(--amber); }
+  .t-keyword{ color: #c9a0ff; }
+  .t-preproc{ color: #c9a0ff; }
 </style>
 </head>
 <body>
@@ -983,13 +1064,19 @@
   const grid = document.getElementById('projGrid');
 
   // Builds the "Files" block for a project. Returns "" when the project has none.
+  // 'view' files open inside the lightbox as highlighted text; 'open' files
+  // (pdf/image) get a normal new-tab link; everything else downloads.
+  function fileLinkAttrs(path){
+    return fileAction(path) === 'download' ? 'download' : 'target="_blank" rel="noopener"';
+  }
+
   function renderFiles(p){
     const files = (p.files || []).filter(f => f && f.path);
     if (!files.length) return "";
     const items = files.map(f => {
       const ext = (f.path.split('.').pop() || 'file').toUpperCase().slice(0, 5);
       const name = f.name || f.path.split('/').pop();
-      return `<li><a href="${f.path}" target="_blank" rel="noopener">
+      return `<li><a href="${f.path}" data-path="${f.path}" data-name="${escHtml(name)}" ${fileLinkAttrs(f.path)}>
         <span class="file-ext mono">${ext}</span>
         <span>${name}</span>
         ${f.note ? `<span class="file-note">${f.note}</span>` : ''}
@@ -1042,6 +1129,156 @@
   });
 
   // Lightbox
+  /* ---------------- CODE / DOCUMENT VIEWER ----------------
+     Text files open inside the page (line numbers + syntax highlighting)
+     instead of downloading. PDFs and images open in a new tab; anything
+     else (zip, docx, xlsx ...) downloads. To change how an extension
+     behaves, add it to VIEWERS or OPEN_IN_TAB below.
+  ---------------------------------------------------------- */
+
+  const LANGS = {
+    python: {
+      comment: /#[^\n]*/,
+      string:  /"""[\s\S]*?"""|'''[\s\S]*?'''|"(?:\\.|[^"\\\n])*"|'(?:\\.|[^'\\\n])*'/,
+      number:  /\b\d[\d_]*(?:\.\d+)?(?:[eE][+-]?\d+)?\b/,
+      keyword: /\b(?:False|None|True|and|as|assert|async|await|break|class|continue|def|del|elif|else|except|finally|for|from|global|if|import|in|is|lambda|nonlocal|not|or|pass|raise|return|try|while|with|yield|self)\b/
+    },
+    c: {
+      comment: /\/\/[^\n]*|\/\*[\s\S]*?\*\//,
+      string:  /"(?:\\.|[^"\\\n])*"|'(?:\\.|[^'\\\n])*'/,
+      preproc: /^[ \t]*#[ \t]*[a-z]+/m,
+      number:  /\b(?:0[xX][0-9a-fA-F]+|\d[\d_]*(?:\.\d+)?(?:[eE][+-]?\d+)?)[fFuUlL]*\b/,
+      keyword: /\b(?:auto|bool|break|byte|case|char|class|const|continue|default|delete|do|double|else|enum|extern|false|float|for|goto|if|inline|int|long|namespace|new|nullptr|private|protected|public|return|short|signed|sizeof|static|struct|switch|template|this|true|typedef|typename|union|unsigned|virtual|void|volatile|while|uint8_t|uint16_t|uint32_t|int8_t|int16_t|int32_t|size_t|String|setup|loop)\b/
+    },
+    js: {
+      comment: /\/\/[^\n]*|\/\*[\s\S]*?\*\//,
+      string:  /`(?:\\.|[^`\\])*`|"(?:\\.|[^"\\\n])*"|'(?:\\.|[^'\\\n])*'/,
+      number:  /\b(?:0[xX][0-9a-fA-F]+|\d[\d_]*(?:\.\d+)?(?:[eE][+-]?\d+)?)\b/,
+      keyword: /\b(?:async|await|break|case|catch|class|const|continue|default|delete|do|else|export|extends|false|finally|for|from|function|if|import|in|instanceof|let|new|null|of|return|super|switch|this|throw|true|try|typeof|undefined|var|void|while|yield)\b/
+    },
+    matlab: {
+      comment: /%[^\n]*/,
+      string:  /'(?:[^'\n]|'')*'|"(?:[^"\n]|"")*"/,
+      number:  /\b\d+(?:\.\d+)?(?:[eE][+-]?\d+)?\b/,
+      keyword: /\b(?:break|case|catch|classdef|continue|else|elseif|end|for|function|global|if|otherwise|parfor|persistent|return|switch|try|while)\b/
+    },
+    shell: {
+      comment: /#[^\n]*/,
+      string:  /"(?:\\.|[^"\\])*"|'[^']*'/,
+      number:  /\b\d+\b/,
+      keyword: /\b(?:case|do|done|elif|else|esac|export|fi|for|function|if|in|local|return|then|until|while)\b/
+    },
+    plain: {}
+  };
+
+  // extension -> highlighter. Anything listed here renders in the page.
+  const VIEWERS = {
+    py: 'python', pyw: 'python',
+    c: 'c', h: 'c', cpp: 'c', hpp: 'c', cc: 'c', ino: 'c',
+    js: 'js', ts: 'js', json: 'js',
+    m: 'matlab',
+    sh: 'shell', bash: 'shell',
+    txt: 'plain', md: 'plain', csv: 'plain', log: 'plain',
+    yml: 'plain', yaml: 'plain', ini: 'plain', cfg: 'plain',
+    html: 'plain', css: 'plain', xml: 'plain'
+  };
+
+  // The browser already renders these well on its own.
+  const OPEN_IN_TAB = ['pdf', 'png', 'jpg', 'jpeg', 'gif', 'svg', 'webp', 'mp4', 'webm', 'mp3', 'wav', 'ogg'];
+
+  const MAX_VIEW_CHARS = 400 * 1024;
+  let currentCodeText = '';
+
+  function extOf(path){ return (path.split('.').pop() || '').toLowerCase(); }
+
+  function fileAction(path){
+    const ext = extOf(path);
+    if (VIEWERS[ext]) return 'view';
+    if (OPEN_IN_TAB.indexOf(ext) !== -1) return 'open';
+    return 'download';
+  }
+
+  function escHtml(s){
+    return String(s).replace(/[&<>"]/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c]));
+  }
+
+  function fmtSize(n){
+    return n < 1024 ? n + ' B' : (n / 1024).toFixed(n < 102400 ? 1 : 0) + ' KB';
+  }
+
+  // Single-pass tokenizer: every language rule becomes one capturing group in a
+  // combined regex, so nothing is ever highlighted twice. Rule patterns must use
+  // non-capturing (?:...) groups, otherwise the group indices shift.
+  function highlight(src, langName){
+    const cfg = LANGS[langName] || LANGS.plain;
+    const kinds = ['comment', 'string', 'preproc', 'number', 'keyword'].filter(k => cfg[k]);
+    if (!kinds.length) return escHtml(src);
+    const re = new RegExp(kinds.map(k => '(' + cfg[k].source + ')').join('|'), 'gm');
+    let out = '', last = 0, m;
+    while ((m = re.exec(src)) !== null){
+      if (!m[0]){ re.lastIndex++; continue; }
+      out += escHtml(src.slice(last, m.index));
+      let kind = 'plain';
+      for (let i = 0; i < kinds.length; i++){
+        if (m[i + 1] !== undefined){ kind = kinds[i]; break; }
+      }
+      out += '<span class="t-' + kind + '">' + escHtml(m[0]) + '</span>';
+      last = m.index + m[0].length;
+    }
+    return out + escHtml(src.slice(last));
+  }
+
+  function gutterFor(src){
+    const n = src.split('\n').length;
+    let out = '';
+    for (let i = 1; i <= n; i++) out += i + '\n';
+    return out;
+  }
+
+  async function openCodeViewer(path, name){
+    gallery = [];
+    lightboxContent.classList.add('is-code');
+    lightboxContent.innerHTML = `<div class="code-viewer"><div class="code-viewer-bar">Loading ${escHtml(name)}…</div></div>`;
+    lightbox.classList.add('open');
+    try {
+      const res = await fetch(path);
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const buf = await res.arrayBuffer();
+      const truncated = buf.byteLength > MAX_VIEW_CHARS;
+      const text = new TextDecoder('utf-8').decode(truncated ? buf.slice(0, MAX_VIEW_CHARS) : buf);
+      currentCodeText = text;
+      const lang = VIEWERS[extOf(path)] || 'plain';
+      const note = truncated
+        ? `<div class="code-viewer-note">Showing the first ${fmtSize(MAX_VIEW_CHARS)} — <a href="${path}" download>download</a> for the full file.</div>`
+        : '';
+      lightboxContent.innerHTML = `<div class="code-viewer">
+        <div class="code-viewer-bar">
+          <span class="cv-name">${escHtml(name)}</span>
+          <span class="cv-size">${fmtSize(buf.byteLength)}</span>
+          <span class="cv-spacer"></span>
+          <button class="cv-btn" id="cvCopy" type="button">Copy</button>
+          <a class="cv-btn" href="${path}" download>Download</a>
+        </div>
+        <div class="code-viewer-body">
+          <pre class="code-gutter">${gutterFor(text)}</pre><pre class="code-pre"><code>${highlight(text, lang)}</code></pre>
+        </div>
+        ${note}
+      </div>`;
+      const copyBtn = document.getElementById('cvCopy');
+      copyBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText(currentCodeText).then(() => {
+          copyBtn.textContent = 'Copied';
+          setTimeout(() => { copyBtn.textContent = 'Copy'; }, 1200);
+        });
+      });
+    } catch (err) {
+      lightboxContent.innerHTML = `<div class="code-viewer">
+        <div class="code-viewer-bar"><span class="cv-name">${escHtml(name)}</span></div>
+        <div class="code-viewer-note">Couldn't load this file for preview — <a href="${path}" download>download it</a> instead.</div>
+      </div>`;
+    }
+  }
+
   const lightbox = document.getElementById('lightbox');
   const lightboxContent = document.getElementById('lightboxContent');
 
@@ -1066,10 +1303,19 @@
   }
 
   grid.addEventListener('click', (e) => {
+    const fileLink = e.target.closest('.file-list a');
+    if (fileLink) {
+      if (fileAction(fileLink.dataset.path) === 'view') {
+        e.preventDefault();
+        openCodeViewer(fileLink.dataset.path, fileLink.dataset.name);
+      }
+      return;
+    }
     const mediaEl = e.target.closest('.proj-media.has-media');
     if (!mediaEl) return;
     const p = projects[mediaEl.dataset.idx];
     gallery = [];
+    lightboxContent.classList.remove('is-code');
     if (p.media.type === 'image') {
       lightboxContent.innerHTML = `<img src="${p.media.src}" alt="${p.title}">`;
     } else if (p.media.type === 'video') {
@@ -1089,6 +1335,7 @@
 
   function closeLightbox(){
     lightbox.classList.remove('open');
+    lightboxContent.classList.remove('is-code');
     lightboxContent.innerHTML = '';
     gallery = [];
   }
