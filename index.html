@@ -260,10 +260,36 @@
     background: var(--bg-alt);
     border-bottom: 1px solid var(--panel-border);
   }
+  .profile-highlight{
+    display:flex;
+    flex-wrap:wrap;
+    gap: 10px;
+    padding: 14px 32px 8px;
+  }
+  .profile-highlight-item{
+    display:flex; align-items:center; gap:10px;
+    flex: 1 1 220px;
+    background: rgba(255,176,32,0.08);
+    border: 1px solid rgba(255,176,32,0.35);
+    border-radius: 6px;
+    padding: 9px 14px;
+    font-size: 13px;
+  }
+  .profile-highlight-item .hicon{ font-size:15px; line-height:1; flex-shrink:0; }
+  .profile-highlight-item .k{
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color: var(--amber);
+    white-space:nowrap;
+  }
+  .profile-highlight-item .v{ color: var(--text); font-weight:600; }
+
   .profile-bar-inner{
     display:flex;
     flex-wrap:wrap;
-    padding: 14px 32px;
+    padding: 8px 32px 14px;
   }
   .profile-item{
     display:flex; align-items:baseline; gap:8px;
@@ -282,7 +308,9 @@
   .profile-item .v{ color: var(--text); font-weight:500; }
 
   @media (max-width: 860px){
-    .profile-bar-inner{ padding: 12px 20px; }
+    .profile-highlight{ padding: 12px 20px 6px; }
+    .profile-highlight-item{ flex-basis:100%; }
+    .profile-bar-inner{ padding: 6px 20px 12px; }
     .profile-item{ padding:4px 14px; border-right:none; }
   }
 
@@ -734,13 +762,27 @@
 </header>
 
 <div class="profile-bar">
-  <div class="wrap profile-bar-inner">
-    <div class="profile-item"><span class="k">Location</span><span class="v">Milan, Italy</span></div>
-    <div class="profile-item"><span class="k">Work Permit</span><span class="v">Italian (Permanent Residency)</span></div>
-    <div class="profile-item"><span class="k">Nationality</span><span class="v">Indian</span></div>
-    <div class="profile-item"><span class="k">MSc</span><span class="v">Robotics Engineering — Univ. of Genoa</span></div>
-    <div class="profile-item"><span class="k">BEng</span><span class="v">Electrical &amp; Electronics — Vel Tech Univ.</span></div>
-    <div class="profile-item"><span class="k">Languages</span><span class="v">English C2 · Italian A2</span></div>
+  <div class="wrap">
+    <div class="profile-highlight">
+      <div class="profile-highlight-item">
+        <span class="hicon" aria-hidden="true">📍</span>
+        <span class="k">Location</span><span class="v">Milan, Italy</span>
+      </div>
+      <div class="profile-highlight-item">
+        <span class="hicon" aria-hidden="true">🏢</span>
+        <span class="k">Currently at</span><span class="v">MOLLFAM Fabbrica Automatica Srl — Embedded Systems &amp; Robotics Engineer</span>
+      </div>
+      <div class="profile-highlight-item">
+        <span class="hicon" aria-hidden="true">🛡</span>
+        <span class="k">Work Permit</span><span class="v">Italian (Permanent Residency)</span>
+      </div>
+    </div>
+    <div class="profile-bar-inner">
+      <div class="profile-item"><span class="k">Nationality</span><span class="v">Indian</span></div>
+      <div class="profile-item"><span class="k">MSc</span><span class="v">Robotics Engineering — Univ. of Genoa</span></div>
+      <div class="profile-item"><span class="k">BEng</span><span class="v">Electrical &amp; Electronics — Vel Tech Univ.</span></div>
+      <div class="profile-item"><span class="k">Languages</span><span class="v">English C2 · Italian A2</span></div>
+    </div>
   </div>
 </div>
 
