@@ -255,63 +255,67 @@
   }
   .btn-outline:hover{ border-color: var(--teal); color: var(--teal); }
 
-  /* ---------- PROFILE BAR ---------- */
+  /* ---------- PROFILE BAR (ROADMAP) ---------- */
   .profile-bar{
     background: var(--bg-alt);
     border-bottom: 1px solid var(--panel-border);
   }
-  .profile-highlight{
+  .roadmap{
+    position:relative;
     display:flex;
-    flex-wrap:wrap;
-    gap: 10px;
-    padding: 14px 32px 8px;
+    align-items:flex-start;
+    padding: 32px 32px 24px;
   }
-  .profile-highlight-item{
-    display:flex; align-items:center; gap:10px;
-    flex: 1 1 220px;
-    background: rgba(255,176,32,0.08);
-    border: 1px solid rgba(255,176,32,0.35);
-    border-radius: 6px;
-    padding: 9px 14px;
-    font-size: 13px;
+  .roadmap::before{
+    content:'';
+    position:absolute;
+    top: 44px;
+    left: 6%;
+    right: 6%;
+    height:2px;
+    background: var(--panel-border);
   }
-  .profile-highlight-item .hicon{ font-size:15px; line-height:1; flex-shrink:0; }
-  .profile-highlight-item .k{
+  .roadmap-node{
+    position:relative;
+    flex:1;
+    display:flex; flex-direction:column; align-items:center;
+    gap:10px;
+    text-align:center;
+    padding: 0 6px;
+  }
+  .roadmap-icon{
+    width:52px; height:52px;
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    background: var(--bg-alt);
+    border: 2px solid var(--node-color);
+    color: var(--node-color);
+    box-shadow: 0 0 14px var(--node-glow);
+    flex-shrink:0;
+  }
+  .roadmap-icon svg{ width:22px; height:22px; }
+  .roadmap-label{
     font-family: var(--font-mono);
     font-size: 10.5px;
     letter-spacing:0.08em;
     text-transform:uppercase;
-    color: var(--amber);
-    white-space:nowrap;
+    font-weight:600;
+    color: var(--node-color);
   }
-  .profile-highlight-item .v{ color: var(--text); font-weight:600; }
-
-  .profile-bar-inner{
-    display:flex;
-    flex-wrap:wrap;
-    padding: 8px 32px 14px;
-  }
-  .profile-item{
-    display:flex; align-items:baseline; gap:8px;
-    padding: 4px 20px;
-    border-right: 1px solid var(--panel-border);
+  .roadmap-value{
     font-size: 13px;
+    color: var(--text);
+    font-weight:500;
+    line-height:1.35;
   }
-  .profile-item:last-child{ border-right:none; }
-  .profile-item .k{
-    font-family: var(--font-mono);
-    font-size: 10.5px;
-    letter-spacing:0.08em;
-    text-transform:uppercase;
-    color: var(--text-dimmer);
-  }
-  .profile-item .v{ color: var(--text); font-weight:500; }
+  .roadmap-flag{ width:16px; height:11px; border-radius:2px; display:inline-block; vertical-align:middle; margin-left:5px; box-shadow: 0 0 0 1px rgba(255,255,255,0.15); }
 
   @media (max-width: 860px){
-    .profile-highlight{ padding: 12px 20px 6px; }
-    .profile-highlight-item{ flex-basis:100%; }
-    .profile-bar-inner{ padding: 6px 20px 12px; }
-    .profile-item{ padding:4px 14px; border-right:none; }
+    .roadmap{ flex-direction:column; align-items:stretch; gap:22px; padding:24px 20px; }
+    .roadmap::before{ display:none; }
+    .roadmap-node{ flex-direction:row; text-align:left; padding:0; gap:14px; }
+    .roadmap-icon{ width:44px; height:44px; }
+    .roadmap-icon svg{ width:18px; height:18px; }
   }
 
   .datasheet{
@@ -763,25 +767,73 @@
 
 <div class="profile-bar">
   <div class="wrap">
-    <div class="profile-highlight">
-      <div class="profile-highlight-item">
-        <span class="hicon" aria-hidden="true">📍</span>
-        <span class="k">Location</span><span class="v">Milan, Italy</span>
+    <div class="roadmap">
+      <div class="roadmap-node" style="--node-color:#34d399; --node-glow:rgba(52,211,153,0.35)">
+        <div class="roadmap-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 21s-7-7.2-7-12a7 7 0 1 1 14 0c0 4.8-7 12-7 12Z"/>
+            <circle cx="12" cy="9" r="2.5"/>
+          </svg>
+        </div>
+        <div class="roadmap-label">Location</div>
+        <div class="roadmap-value">
+          Milan, Italy
+          <svg class="roadmap-flag" viewBox="0 0 20 14" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="0" width="6.67" height="14" fill="#009246"/>
+            <rect x="6.67" width="6.67" height="14" fill="#fff"/>
+            <rect x="13.33" width="6.67" height="14" fill="#CE2B37"/>
+          </svg>
+        </div>
       </div>
-      <div class="profile-highlight-item">
-        <span class="hicon" aria-hidden="true">🏢</span>
-        <span class="k">Currently at</span><span class="v">MOLLFAM Fabbrica Automatica Srl — Embedded Systems &amp; Robotics Engineer</span>
+
+      <div class="roadmap-node" style="--node-color:#60a5fa; --node-glow:rgba(96,165,250,0.35)">
+        <div class="roadmap-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="5" width="18" height="14" rx="2"/>
+            <circle cx="9" cy="10" r="2"/>
+            <path d="M6 16c0-1.7 1.3-3 3-3s3 1.3 3 3"/>
+            <path d="M14 9h4M14 13h4"/>
+          </svg>
+        </div>
+        <div class="roadmap-label">Work Permit</div>
+        <div class="roadmap-value">Italian<br>(Permanent Residency)</div>
       </div>
-      <div class="profile-highlight-item">
-        <span class="hicon" aria-hidden="true">🛡</span>
-        <span class="k">Work Permit</span><span class="v">Italian (Permanent Residency)</span>
+
+      <div class="roadmap-node" style="--node-color:#c9a0ff; --node-glow:rgba(201,160,255,0.35)">
+        <div class="roadmap-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="7" width="18" height="12" rx="2"/>
+            <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+            <path d="M3 12h18"/>
+          </svg>
+        </div>
+        <div class="roadmap-label">Working Company</div>
+        <div class="roadmap-value">MollFAM Fabbrica Automatica Molle S.r.l.</div>
       </div>
-    </div>
-    <div class="profile-bar-inner">
-      <div class="profile-item"><span class="k">Nationality</span><span class="v">Indian</span></div>
-      <div class="profile-item"><span class="k">MSc</span><span class="v">Robotics Engineering — Univ. of Genoa</span></div>
-      <div class="profile-item"><span class="k">BEng</span><span class="v">Electrical &amp; Electronics — Vel Tech Univ.</span></div>
-      <div class="profile-item"><span class="k">Languages</span><span class="v">English C2 · Italian A2</span></div>
+
+      <div class="roadmap-node" style="--node-color:var(--amber); --node-glow:rgba(255,176,32,0.35)">
+        <div class="roadmap-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3 2 8l10 5 10-5-10-5Z"/>
+            <path d="M6 10.5V16c0 1.7 2.7 3 6 3s6-1.3 6-3v-5.5"/>
+            <path d="M22 8v6"/>
+          </svg>
+        </div>
+        <div class="roadmap-label">Bachelor's Degree</div>
+        <div class="roadmap-value">Electrical &amp; Electronics Eng. — Vel Tech Univ.</div>
+      </div>
+
+      <div class="roadmap-node" style="--node-color:var(--teal); --node-glow:rgba(79,209,197,0.35)">
+        <div class="roadmap-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3 2 8l10 5 10-5-10-5Z"/>
+            <path d="M6 10.5V16c0 1.7 2.7 3 6 3s6-1.3 6-3v-5.5"/>
+            <path d="M22 8v6"/>
+          </svg>
+        </div>
+        <div class="roadmap-label">Master's Degree</div>
+        <div class="roadmap-value">Robotics Engineering — Univ. of Genoa</div>
+      </div>
     </div>
   </div>
 </div>
