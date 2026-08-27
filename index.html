@@ -145,22 +145,62 @@
     position:relative;
     overflow:hidden;
   }
-  .status-line{
-    font-family: var(--font-mono);
-    font-size: 12.5px;
-    color: var(--text-dim);
-    display:flex; align-items:center; gap:10px;
-    margin-bottom: 40px;
-    letter-spacing:0.03em;
+  @keyframes blink{ 0%,100%{opacity:1;} 50%{opacity:.35;} }
+
+  .hero-grid{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:48px;
   }
-  .status-dot{
-    width:8px; height:8px; border-radius:50%;
+  .hero-main{ flex:1 1 auto; min-width:0; }
+
+  .relocate-card{
+    flex:0 0 250px;
+    background: linear-gradient(180deg, rgba(79,209,197,0.08), rgba(79,209,197,0.02));
+    border: 1px solid rgba(79,209,197,0.35);
+    border-radius: 10px;
+    padding: 18px;
+    box-shadow: 0 0 24px rgba(79,209,197,0.14), inset 0 0 20px rgba(79,209,197,0.04);
+  }
+  .relocate-head{
+    display:flex; align-items:center; gap:8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color: var(--teal);
+    margin-bottom:14px;
+  }
+  .relocate-icon{ width:16px; height:16px; flex-shrink:0; }
+  .relocate-dot{
+    width:6px; height:6px; border-radius:50%;
     background: var(--teal);
     box-shadow: 0 0 8px var(--teal);
     animation: blink 2.2s ease-in-out infinite;
+    margin-left:auto;
     flex-shrink:0;
   }
-  @keyframes blink{ 0%,100%{opacity:1;} 50%{opacity:.35;} }
+  .relocate-list{ list-style:none; display:flex; flex-direction:column; gap:8px; }
+  .relocate-list li{
+    display:flex; align-items:center; gap:10px;
+    background: rgba(255,255,255,0.03);
+    border:1px solid var(--panel-border);
+    border-radius:6px;
+    padding:8px 10px;
+    font-size:13px;
+  }
+  .flag-svg{ width:20px; height:14px; border-radius:2px; flex-shrink:0; display:block; box-shadow: 0 0 0 1px rgba(255,255,255,0.08); }
+  .relocate-list .country{ flex:1; color: var(--text); }
+  .relocate-list .code{ font-family: var(--font-mono); font-size:11px; color: var(--text-dimmer); }
+
+  @media (max-width: 720px){
+    .hero-grid{ flex-direction:column; }
+    .relocate-card{ flex-basis:auto; width:100%; max-width:340px; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .relocate-dot{ animation:none; }
+  }
 
   .hero h1{
     font-family: var(--font-display);
@@ -214,10 +254,6 @@
     border: 1px solid var(--panel-border);
   }
   .btn-outline:hover{ border-color: var(--teal); color: var(--teal); }
-
-  @media (prefers-reduced-motion: reduce){
-    .status-dot{ animation:none; }
-  }
 
   /* ---------- ABOUT ---------- */
   .about-grid{
@@ -679,24 +715,68 @@
 </header>
 
 <section class="hero wrap">
-  <div class="status-line">
-    <span class="status-dot"></span>
-    SYS.STATUS: OPEN_TO_RELOCATE — GER&nbsp;/&nbsp;DE&nbsp;/&nbsp;NL&nbsp;/&nbsp;BEL 
-  </div>
+  <div class="hero-grid">
+    <div class="hero-main">
+      <h1>
+        Surendra Kumar Reddy Polaka
+        <span class="role">Embedded Systems &amp; Robotics Engineer</span>
+      </h1>
 
-  <h1>
-    Surendra Kumar Reddy Polaka
-    <span class="role">Embedded Systems &amp; Robotics Engineer</span>
-  </h1>
+      <p class="lede">
+        I build real-time control systems and intelligent automation for industrial hardware —
+        from PID motor loops and CAN-bus torque control to robot–sensor integration .
+      </p>
 
-  <p class="lede">
-    I build real-time control systems and intelligent automation for industrial hardware —
-    from PID motor loops and CAN-bus torque control to robot–sensor integration .
-  </p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">View Projects</a>
+        <a href="#contact" class="btn btn-outline">Get in Touch</a>
+      </div>
+    </div>
 
-  <div class="hero-cta">
-    <a href="#projects" class="btn btn-primary">View Projects</a>
-    <a href="#contact" class="btn btn-outline">Get in Touch</a>
+    <aside class="relocate-card" aria-label="Open to relocate">
+      <div class="relocate-head">
+        <svg class="relocate-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 21s-7-7.2-7-12a7 7 0 1 1 14 0c0 4.8-7 12-7 12Z"/>
+          <circle cx="12" cy="9" r="2.5"/>
+        </svg>
+        <span>Open to Relocate</span>
+        <span class="relocate-dot"></span>
+      </div>
+      <ul class="relocate-list">
+        <li>
+          <svg class="flag-svg" viewBox="0 0 20 14" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect y="0" width="20" height="4.67" fill="#000"/>
+            <rect y="4.67" width="20" height="4.67" fill="#DD0000"/>
+            <rect y="9.33" width="20" height="4.67" fill="#FFCE00"/>
+          </svg>
+          <span class="country">Germany</span><span class="code">DE</span>
+        </li>
+        <li>
+          <svg class="flag-svg" viewBox="0 0 20 14" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect width="20" height="14" fill="#C60C30"/>
+            <rect x="6" width="3" height="14" fill="#fff"/>
+            <rect y="5.5" width="20" height="3" fill="#fff"/>
+          </svg>
+          <span class="country">Denmark</span><span class="code">DK</span>
+        </li>
+        <li>
+          <svg class="flag-svg" viewBox="0 0 20 14" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect y="0" width="20" height="4.67" fill="#AE1C28"/>
+            <rect y="4.67" width="20" height="4.67" fill="#fff"/>
+            <rect y="9.33" width="20" height="4.67" fill="#21468B"/>
+          </svg>
+          <span class="country">Netherlands</span><span class="code">NL</span>
+        </li>
+        <li>
+          <svg class="flag-svg" viewBox="0 0 20 14" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="0" width="6.67" height="14" fill="#000"/>
+            <rect x="6.67" width="6.67" height="14" fill="#FFD90C"/>
+            <rect x="13.33" width="6.67" height="14" fill="#EF3340"/>
+          </svg>
+          <span class="country">Belgium</span><span class="code">BE</span>
+        </li>
+      </ul>
+    </aside>
   </div>
 </section>
 
