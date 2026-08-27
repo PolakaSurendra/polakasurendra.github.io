@@ -255,16 +255,36 @@
   }
   .btn-outline:hover{ border-color: var(--teal); color: var(--teal); }
 
-  /* ---------- ABOUT ---------- */
-  .about-grid{
-    display:grid;
-    grid-template-columns: 1.3fr 1fr;
-    gap: 56px;
+  /* ---------- PROFILE BAR ---------- */
+  .profile-bar{
+    background: var(--bg-alt);
+    border-bottom: 1px solid var(--panel-border);
   }
-  @media (max-width: 860px){ .about-grid{ grid-template-columns: 1fr; } }
+  .profile-bar-inner{
+    display:flex;
+    flex-wrap:wrap;
+    padding: 14px 32px;
+  }
+  .profile-item{
+    display:flex; align-items:baseline; gap:8px;
+    padding: 4px 20px;
+    border-right: 1px solid var(--panel-border);
+    font-size: 13px;
+  }
+  .profile-item:last-child{ border-right:none; }
+  .profile-item .k{
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color: var(--text-dimmer);
+  }
+  .profile-item .v{ color: var(--text); font-weight:500; }
 
-  .about-text p{ color: var(--text-dim); margin-bottom:18px; font-size:15.5px; }
-  .about-text p:first-child{ color: var(--text); font-size:17px; }
+  @media (max-width: 860px){
+    .profile-bar-inner{ padding: 12px 20px; }
+    .profile-item{ padding:4px 14px; border-right:none; }
+  }
 
   .datasheet{
     background: var(--panel);
@@ -705,7 +725,6 @@
   <nav class="wrap">
     <div class="nav-id mono"><b>My Portfolio </b> </div>
     <div class="nav-links">
-      <a href="#about">About</a>
       <a href="#experience">Experience</a>
       <a href="#projects">Projects</a>
       <a href="#skills">Skills</a>
@@ -713,6 +732,17 @@
     </div>
   </nav>
 </header>
+
+<div class="profile-bar">
+  <div class="wrap profile-bar-inner">
+    <div class="profile-item"><span class="k">Location</span><span class="v">Milan, Italy</span></div>
+    <div class="profile-item"><span class="k">Work Permit</span><span class="v">Italian (Permanent Residency)</span></div>
+    <div class="profile-item"><span class="k">Nationality</span><span class="v">Indian</span></div>
+    <div class="profile-item"><span class="k">MSc</span><span class="v">Robotics Engineering — Univ. of Genoa</span></div>
+    <div class="profile-item"><span class="k">BEng</span><span class="v">Electrical &amp; Electronics — Vel Tech Univ.</span></div>
+    <div class="profile-item"><span class="k">Languages</span><span class="v">English C2 · Italian A2</span></div>
+  </div>
+</div>
 
 <section class="hero wrap">
   <div class="hero-grid">
@@ -795,42 +825,8 @@
   </div>
 </section>
 
-<section id="about" class="wrap">
-  <h2 class="section-title"><span class="idx">01 /</span> About</h2>
-  <div class="about-grid">
-    <div class="about-text">
-      <p>I’m an Embedded & Robotics Engineer focused on intelligent industrial automation. <p>
-      <p>I design and develop real-time control systems, embedded software, and intelligent automation solutions that connect hardware, software, sensors, and machines.My work spans from low-level embedded firmware and motor-control algorithms to industrial communication, robotics, automated testing, and AI-based systems. I work with technologies such as C/C++, Python, ARM microcontrollers, RTOS, CAN/CANopen, PID control, PWM, encoders, Hall sensors, and industrial robots.
-      <p>I have hands-on experience developing DC and BLDC motor-control systems, implementing closed-loop control, integrating sensors and actuators, and communicating with motor drives such as EPOS over CAN. I also work on robot–sensor integration, automated test systems, data acquisition, and real-time industrial applications.
-
-      <p> ⚙️ Real-time embedded control systems <p>
-      <p> 🤖 Industrial robotics & automation <p>
-      <p> 🔄 DC/BLDC motor-control systems <p>
-      <p> 🧠 AI, ML & reinforcement-learning applications <p>
-      <p> 🔌 CAN/CANopen and industrial communication <p>
-      <p> 📡 Sensor & actuator integration <p>
-      <p> 🧪 Automated testing and validation systems <p>
-      <p> 💻 Embedded C/C++ and Python applications <p>
-      <p> 📊 Data acquisition, monitoring & analysis <p>
-      <p> 🔧 Hardware–software integration and rapid prototyping <p>
-        
-    </div>
-
-    <div class="datasheet">
-      <div class="datasheet-head"><span>PROFILE</span><span>DATASHEET</span></div>
-      <div class="datasheet-row"><span class="k">LOCATION</span><span class="v">Milan, Italy</span></div>
-      <div class="datasheet-row"><span class="k">WORK PERMIT</span><span class="v">Italian (Permanent Residency)</span></div>
-      <div class="datasheet-row"><span class="k">NATIONALITY</span><span class="v">Indian</span></div>
-      <div class="datasheet-row"><span class="k">MSC</span><span class="v">Robotics Engineering — Univ. of Genoa</span></div>
-      <div class="datasheet-row"><span class="k">BENG</span><span class="v">Electrical &amp; Electronics — Vel Tech Univ.</span></div>
-      <div class="datasheet-row"><span class="k">LANGUAGES</span><span class="v">English C2 · Italian A2</span></div>
-      <div class="datasheet-row"><span class="k">TARGET REGIONS</span><span class="v">IT · DE · NL · BE</span></div>
-    </div>
-  </div>
-</section>
-
 <section id="experience" class="wrap">
-  <h2 class="section-title"><span class="idx">02 /</span> Experience</h2>
+  <h2 class="section-title"><span class="idx">01 /</span> Experience</h2>
   <div class="timeline">
 
     <div class="tl-item">
@@ -881,12 +877,12 @@
 </section>
 
 <section id="projects" class="wrap">
-  <h2 class="section-title"><span class="idx">03 /</span> Projects</h2>
+  <h2 class="section-title"><span class="idx">02 /</span> Projects</h2>
   <div class="proj-grid" id="projGrid"></div>
 </section>
 
 <section id="skills" class="wrap">
-  <h2 class="section-title"><span class="idx">04 /</span> Skills</h2>
+  <h2 class="section-title"><span class="idx">03 /</span> Skills</h2>
   <div class="skills-grid">
     <div>
       <div class="skill-group-title">Languages</div>
@@ -920,7 +916,7 @@
 </section>
 
 <section id="education" class="wrap">
-  <h2 class="section-title"><span class="idx">05 /</span> Education &amp; Certifications</h2>
+  <h2 class="section-title"><span class="idx">04 /</span> Education &amp; Certifications</h2>
   <div class="edu-grid">
     <div>
       <div class="edu-item">
