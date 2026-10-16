@@ -4,12 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Surendra Kumar Reddy Polaka — Embedded Systems & Robotics Engineer</title>
-<meta name="description" content="Portfolio of Surendra Kumar Reddy Polaka — embedded firmware, industrial robotics, ROS simulation and hardware-in-the-loop validation, Milan, Italy.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Surendra Kumar Reddy Polaka — Embedded Systems & Robotics Engineer">
-<meta property="og:description" content="Firmware, industrial robot integration, ROS simulation and hardware-in-the-loop validation. Milan, Italy.">
-<meta property="og:url" content="https://polakasurendra.github.io/">
-<meta name="theme-color" content="#12151a">
+<meta name="description" content="Portfolio of Surendra Kumar Reddy Polaka — embedded firmware, industrial robotics and AI safety verification projects.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -632,58 +627,6 @@
     color: var(--text-dim);
   }
 
-  /* ---------- VALIDATION APPROACH ---------- */
-  .val-grid{
-    display:grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 1px;
-    border: 1px solid var(--panel-border);
-    border-radius: 5px;
-    background: var(--panel-border);
-    overflow:hidden;
-  }
-  @media (max-width: 980px){ .val-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  @media (max-width: 560px){ .val-grid{ grid-template-columns: 1fr; } }
-  .val-step{
-    padding: 24px 22px 22px;
-    background: var(--panel);
-    display:flex; flex-direction:column; gap:10px;
-    position:relative;
-  }
-  .val-num{
-    font-family: var(--font-mono);
-    font-size: 11px; letter-spacing:0.1em; text-transform:uppercase;
-    color: var(--teal);
-  }
-  .val-title{
-    font-family: var(--font-display);
-    font-size: 18px; font-weight:600; line-height:1.25;
-  }
-  .val-text{ color: var(--text-dim); font-size: 14px; }
-  .val-evidence{
-    margin-top:auto;
-    padding-top: 12px;
-    border-top: 1px dashed var(--panel-border);
-    font-family: var(--font-mono);
-    font-size: 11px; letter-spacing:0.04em;
-    color: var(--text-dimmer);
-  }
-  .val-evidence b{ color: var(--amber); font-weight:500; }
-  .val-tools{ display:flex; flex-wrap:wrap; gap:6px; }
-  .val-note{
-    margin-top: 24px;
-    display:flex; gap:14px; align-items:flex-start;
-    padding: 16px 18px;
-    border: 1px solid rgba(79,209,197,0.35);
-    background: linear-gradient(180deg, rgba(79,209,197,0.07), rgba(79,209,197,0.02));
-    border-radius: 5px;
-    font-size: 14px; color: var(--text);
-  }
-  .val-note .k{
-    font-family: var(--font-mono); font-size:11px; letter-spacing:0.1em; text-transform:uppercase;
-    color: var(--teal); white-space:nowrap; padding-top:2px;
-  }
-
   /* ---------- SKILLS ---------- */
   .skills-grid{
     display:grid;
@@ -868,7 +811,6 @@
     <a href="#top" class="nav-id mono"><b>S. Polaka</b> · Embedded &amp; Robotics</a>
     <div class="nav-links">
       <a href="#experience">Experience</a>
-      <a href="#validation">Validation</a>
       <a href="#projects">Projects</a>
       <a href="#skills">Skills</a>
       <a href="#education">Education</a>
@@ -880,14 +822,14 @@
 <section class="hero wrap" id="top">
   <div class="hero-grid">
     <div class="hero-main">
-      <div class="eyebrow">Milan, Italy · Available for new opportunities</div>
+      <div class="eyebrow">Milan, Italy </div>
       <h1>
         Surendra Kumar Reddy Polaka
-        <span class="role">Embedded Systems &amp; Robotics Engineer · Hardware-in-the-Loop Validation</span>
+        <span class="role">Embedded Systems &amp; Robotics Engineer</span>
       </h1>
 
       <p class="lede">
-        I build and validate the firmware and control systems that run real machines. At MollFAM I designed an industrial clamp controller with PID force and position control, built the production tool that checks every unit, integrated a Mitsubishi RV-2F-D robot into a high-speed pick-and-place cell, and I am developing CAN-bus torque control for brushless motors. My MSc in Robotics Engineering (University of Genoa) adds ROS simulation, autonomous navigation, computer vision and neural-network safety verification. I work on both sides: simulation and real hardware.
+        I build the firmware and control systems that run real machines. At MollFAM I designed an industrial clamp controller with PID force and position control, integrated a Mitsubishi RV-2F-D robot into a high-speed pick-and-place cell, and I am developing CAN-bus torque control for brushless motors. My MSc in Robotics Engineering (University of Genoa) adds ROS, autonomous navigation, computer vision and neural-network safety verification.
       </p>
 
       <ul class="hero-stats">
@@ -899,7 +841,6 @@
 
       <div class="hero-cta">
         <a href="#projects" class="btn btn-primary">View Projects</a>
-        <a href="#validation" class="btn btn-outline">How I Validate</a>
         <a href="#contact" class="btn btn-outline">Get in Touch</a>
       </div>
     </div>
@@ -1053,11 +994,9 @@
         <div class="tl-org">MOLLFAM Fabbrica Automatica Srl — Milan, Italy</div>
         <ul>
           <li>Developed industrial clamp control firmware integrating motor drivers, encoder feedback, EEPROM configuration and a touchscreen interface (ST7789 + XPT2046).</li>
-          <li>Built a production tool that configures each clamp unit and checks its motor driver, encoder feedback, EEPROM and touchscreen, so every unit is verified the same way before use.</li>
-          <li>Designed a DC motor clamp control system using a VNHD7012AY H-bridge driver, implementing PID control with Hall-sensor feedback for accurate force and position control.</li>
-          <li>Debug on real hardware with an oscilloscope and multimeter alongside the firmware, to find whether a fault is in the signal, the wiring, the bus or the code, and fix the root cause.</li>
+          <li>Designed a DC motor clamp control system using a VNH7012AY driver, implementing PID control with Hall-sensor feedback for accurate force and position control.</li>
           <li>Integrated a Mitsubishi RV‑2F‑D industrial robot with Keyence sensors for high-speed pick-and-place automation in production.</li>
-          <li>Developing a brushless motor control system in which an Arduino Uno R4 commands a Maxon EPOS 24/5 controller over CAN bus for precise torque control.</li>
+          <li>Developing a brushless motor control system using EPOS 24/5 over CAN bus, interfacing with an Arduino Uno R4 for precise torque control.</li>
           <li>Manage Microsoft 365 administration and IT support, resolving connectivity, network and software issues across the company.</li>
         </ul>
       </div>
@@ -1094,60 +1033,8 @@
   </div>
 </section>
 
-<section id="validation" class="wrap">
-  <h2 class="section-title"><span class="idx">02 /</span> How I Validate</h2>
-  <p class="section-lede">Most of my work sits where firmware, communication buses, sensors and mechanics meet. This is how I take a system from simulation to the bench to production, with the project that shows each step.</p>
-
-  <div class="val-grid">
-    <div class="val-step">
-      <div class="val-num">Step 01 · Simulate</div>
-      <div class="val-title">Prove the logic first</div>
-      <div class="val-text">In ROS and Gazebo I check that nodes, topics and actions are wired as designed, watch every state transition, and run the full system for long sessions to see what breaks over time.</div>
-      <div class="val-tools">
-        <span class="tag">rqt_graph</span><span class="tag">smach_viewer</span><span class="tag">RViz</span><span class="tag">roslaunch</span>
-      </div>
-      <div class="val-evidence">Shown in <b>Projects 06–08</b> · 2-hour continuous run on the robot dog</div>
-    </div>
-
-    <div class="val-step">
-      <div class="val-num">Step 02 · Bench</div>
-      <div class="val-title">Isolate the layer</div>
-      <div class="val-text">On real hardware I use an oscilloscope and multimeter next to the firmware to decide whether a fault is in the signal, the wiring, the bus or the code, then fix the root cause instead of the symptom.</div>
-      <div class="val-tools">
-        <span class="tag">Oscilloscope</span><span class="tag">Multimeter</span><span class="tag">CAN</span><span class="tag">SPI / I2C / UART</span>
-      </div>
-      <div class="val-evidence">Shown in <b>Projects 01 &amp; 03</b> · clamp controller, CAN torque control</div>
-    </div>
-
-    <div class="val-step">
-      <div class="val-num">Step 03 · Production</div>
-      <div class="val-title">Make the check repeatable</div>
-      <div class="val-text">I built a production tool that configures each clamp unit and checks its motor driver, encoder feedback, EEPROM and touchscreen, so every unit is verified the same way before it is used.</div>
-      <div class="val-tools">
-        <span class="tag">Production test tool</span><span class="tag">EEPROM config</span><span class="tag">HMI</span>
-      </div>
-      <div class="val-evidence">Shown in <b>Project 01</b> · running on the production floor</div>
-    </div>
-
-    <div class="val-step">
-      <div class="val-num">Step 04 · Failure</div>
-      <div class="val-title">Verify, don't assume</div>
-      <div class="val-text">I test what happens when parts fail: in the Gazebo pet robot, stopping the person node or the ball server left the robot working. In my thesis I used formal verification (NeVer2) to check safety properties of RL policies.</div>
-      <div class="val-tools">
-        <span class="tag">Fault isolation</span><span class="tag">NeVer2</span><span class="tag">Formal verification</span>
-      </div>
-      <div class="val-evidence">Shown in <b>Projects 04 &amp; 07</b></div>
-    </div>
-  </div>
-
-  <div class="val-note">
-    <span class="k">Sim ↔ Real</span>
-    <span>Simulation hides timing jitter, sensor noise and wiring faults; real hardware shows them. Having worked in both, I look for the gap between what a model predicts and what the machine actually does.</span>
-  </div>
-</section>
-
 <section id="projects" class="wrap">
-  <h2 class="section-title"><span class="idx">03 /</span> Projects</h2>
+  <h2 class="section-title"><span class="idx">02 /</span> Projects</h2>
   <p class="section-lede">Industrial systems I built at MollFAM, followed by research and university work. Each card lists the key points, and most include the source code and documents. Click an image to see the full gallery.</p>
   <div class="proj-filters" role="group" aria-label="Filter projects">
     <button type="button" class="proj-filter is-active" data-filter="all">All</button>
@@ -1158,16 +1045,8 @@
 </section>
 
 <section id="skills" class="wrap">
-  <h2 class="section-title"><span class="idx">04 /</span> Skills</h2>
+  <h2 class="section-title"><span class="idx">03 /</span> Skills</h2>
   <div class="skills-grid">
-    <div>
-      <div class="skill-group-title">Testing &amp; Validation</div>
-      <div class="skill-chip-row">
-        <span class="chip">Hardware-in-the-loop debugging</span><span class="chip">Root-cause analysis</span>
-        <span class="chip">Production test tooling</span><span class="chip">Fault isolation</span>
-        <span class="chip">Oscilloscope / Multimeter</span><span class="chip">Technical documentation</span>
-      </div>
-    </div>
     <div>
       <div class="skill-group-title">Languages</div>
       <div class="skill-chip-row">
@@ -1193,10 +1072,9 @@
     <div>
       <div class="skill-group-title">Robotics Software</div>
       <div class="skill-chip-row">
-        <span class="chip">ROS 1 (Melodic)</span><span class="chip">SMACH</span><span class="chip">Gazebo</span>
-        <span class="chip">RViz</span><span class="chip">rqt_graph / smach_viewer</span>
+        <span class="chip">ROS</span><span class="chip">SMACH</span><span class="chip">Gazebo</span>
         <span class="chip">OpenCV</span><span class="chip">SLAM (gmapping)</span><span class="chip">move_base</span>
-        <span class="chip">explore-lite</span><span class="chip">actionlib</span><span class="chip">URDF / Xacro</span>
+        <span class="chip">actionlib</span><span class="chip">URDF / Xacro</span>
       </div>
     </div>
     <div>
@@ -1217,7 +1095,7 @@
 </section>
 
 <section id="education" class="wrap">
-  <h2 class="section-title"><span class="idx">05 /</span> Education &amp; Certifications</h2>
+  <h2 class="section-title"><span class="idx">04 /</span> Education &amp; Certifications</h2>
   <div class="edu-grid">
     <div>
       <div class="edu-item">
@@ -1276,15 +1154,14 @@
       title: "Industrial Clamp Control System",
       cat: "industrial",
       points: [
-        "VNHD7012AY H-bridge drives the DC motor; a PID loop closes on Hall-sensor feedback",
+        "VNH7012AY H-bridge drives the DC motor; a PID loop closes on Hall-sensor feedback",
         "Controls both clamping force and position",
         "Touchscreen HMI built on an ST7789 display and an XPT2046 touch controller",
         "Configuration stored in EEPROM, so settings survive power cycles",
-        "Production tool configures each unit and checks motor driver, encoder, EEPROM and touchscreen",
         "Running on the MollFAM production floor"
       ],
-      desc: "DC motor clamp control using a VNHD7012AY driver with PID control and Hall-sensor feedback for precise force and position control, plus a touchscreen HMI (ST7789 + XPT2046), EEPROM-backed configuration and a production check tool.",
-      tags: ["C/C++", "PID", "VNHD7012AY", "EEPROM", "Touchscreen HMI", "Production testing"],
+      desc: "DC motor clamp control using a VNH7012AY driver with PID control and Hall-sensor feedback for precise force and position control, plus a touchscreen HMI (ST7789 + XPT2046) and EEPROM-backed configuration.",
+      tags: ["C/C++", "PID", "VNH7012AY", "EEPROM", "Touchscreen HMI"],
       media: {
         type: "gallery",
         images: [
@@ -1393,10 +1270,9 @@
         "SMACH state machine with three behaviours: Normal, Sleep and Play",
         "Play: go to the person, follow their pointing gesture, then come back",
         "Three ROS nodes: Commander (simulated user), state machine, Display (simulated robot)",
-        "Validated state transitions visually with smach_viewer and node wiring with rqt_graph",
         "The design that projects 07 and 08 build on"
       ],
-      tags: ["ROS 1", "Python", "SMACH", "Finite State Machine", "rqt_graph", "smach_viewer"],
+      tags: ["ROS", "Python", "SMACH", "Finite State Machine", "rqt_graph"],
       media: {
         type: "gallery",
         images: [
@@ -1423,11 +1299,10 @@
         "Play state: tracks a ball with the camera, then sweeps the head left, right and centre",
         "Motion through ROS action servers, so goals can be cancelled and report progress",
         "Independent Person node moves or hides the ball; the robot reacts on its own",
-        "Fault isolation checked: with the Person node or ball server stopped, the robot keeps working",
         "Robot modelled in URDF/Xacro, with ROS controllers for the head joint",
         "Go-to-point action servers were provided by the course; I tuned their gains"
       ],
-      tags: ["ROS 1", "Python", "SMACH", "Gazebo", "actionlib", "URDF / Xacro", "OpenCV"],
+      tags: ["ROS", "Python", "SMACH", "Gazebo", "actionlib", "URDF / Xacro", "OpenCV"],
       media: {
         type: "gallery",
         images: [
@@ -1460,10 +1335,9 @@
         "OpenCV ball detection: each coloured ball marks a room",
         "Laser SLAM with gmapping; path planning and obstacle avoidance with move_base",
         "explore-lite frontier exploration to find rooms it has not seen yet",
-        "Custom ROS message carries ball data from the vision node to the state machine",
-        "Ran the full simulation continuously for 2 hours to check stability over time"
+        "Custom ROS message carries ball data from the vision node to the state machine"
       ],
-      tags: ["ROS 1 (Melodic)", "Python", "SMACH", "OpenCV", "SLAM / gmapping", "move_base", "Gazebo", "URDF"],
+      tags: ["ROS", "Python", "SMACH", "OpenCV", "SLAM / gmapping", "move_base", "Gazebo", "URDF"],
       media: {
         type: "gallery",
         images: [
