@@ -554,6 +554,69 @@
     margin-left: auto;
     flex-shrink: 0;
   }
+  .proj-points{
+    list-style:none;
+    margin: 0 0 16px;
+    display:flex; flex-direction:column; gap:6px;
+    font-size: 13.5px;
+    color: var(--text);
+  }
+  .proj-points li{ position:relative; padding-left:16px; }
+  .proj-points li::before{
+    content:''; position:absolute; left:0; top:9px;
+    width:6px; height:6px; border-radius:1px;
+    background: var(--amber);
+  }
+  .proj-desc{ flex:0 0 auto; }
+  .proj-body .proj-tags{ margin-top:auto; }
+
+  .section-lede{
+    color: var(--text-dim);
+    max-width: 680px;
+    margin: -28px 0 28px;
+    font-size: 15px;
+  }
+  .proj-filters{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom: 28px; }
+  .proj-filter{
+    font-family: var(--font-mono);
+    font-size: 12px; letter-spacing:0.05em; text-transform:uppercase;
+    color: var(--text-dim);
+    background: transparent;
+    border: 1px solid var(--panel-border);
+    padding: 8px 14px; border-radius: 3px;
+    cursor:pointer;
+    transition: color .2s ease, border-color .2s ease, background .2s ease;
+  }
+  .proj-filter:hover{ color: var(--teal); border-color: var(--teal); }
+  .proj-filter.is-active{ color:#12151a; background: var(--teal); border-color: var(--teal); }
+  .proj-card[hidden]{ display:none; }
+
+  .hero-stats{
+    list-style:none;
+    margin-top: 32px;
+    display:grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    max-width: 640px;
+    border: 1px solid var(--panel-border);
+    border-radius: 5px;
+    background: var(--panel);
+  }
+  .hero-stats li{
+    padding: 14px 16px;
+    border-right: 1px solid var(--panel-border);
+    display:flex; flex-direction:column; gap:2px;
+  }
+  .hero-stats li:last-child{ border-right:none; }
+  .hero-stats b{ font-family: var(--font-display); font-size: 24px; font-weight:600; color: var(--text); }
+  .hero-stats span{ font-family: var(--font-mono); font-size: 10.5px; letter-spacing:0.06em; text-transform:uppercase; color: var(--text-dim); line-height:1.35; }
+  @media (max-width: 560px){
+    .hero-stats{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .hero-stats li:nth-child(2){ border-right:none; }
+    .hero-stats li:nth-child(-n+2){ border-bottom: 1px solid var(--panel-border); }
+  }
+
+  .profile-bar + section{ padding-top: 88px; }
+
   .proj-tags{ display:flex; flex-wrap:wrap; gap:7px; }
   .tag{
     font-family: var(--font-mono);
@@ -745,100 +808,36 @@
 
 <header>
   <nav class="wrap">
-    <div class="nav-id mono"><b>My Portfolio </b> </div>
+    <a href="#top" class="nav-id mono"><b>S. Polaka</b> · Embedded &amp; Robotics</a>
     <div class="nav-links">
       <a href="#experience">Experience</a>
       <a href="#projects">Projects</a>
       <a href="#skills">Skills</a>
+      <a href="#education">Education</a>
       <a href="#contact" class="contact-link">Contact</a>
     </div>
   </nav>
 </header>
 
-<div class="profile-bar">
-  <div class="wrap">
-    <div class="roadmap">
-      <div class="roadmap-node">
-        <div class="roadmap-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 21s-7-7.2-7-12a7 7 0 1 1 14 0c0 4.8-7 12-7 12Z"/>
-            <circle cx="12" cy="9" r="2.5"/>
-          </svg>
-        </div>
-        <div class="roadmap-label">Location</div>
-        <div class="roadmap-value">
-          Milan, Italy
-          <svg class="roadmap-flag" viewBox="0 0 20 14" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <rect x="0" width="6.67" height="14" fill="#009246"/>
-            <rect x="6.67" width="6.67" height="14" fill="#fff"/>
-            <rect x="13.33" width="6.67" height="14" fill="#CE2B37"/>
-          </svg>
-        </div>
-      </div>
-
-      <div class="roadmap-node">
-        <div class="roadmap-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="5" width="18" height="14" rx="2"/>
-            <circle cx="9" cy="10" r="2"/>
-            <path d="M6 16c0-1.7 1.3-3 3-3s3 1.3 3 3"/>
-            <path d="M14 9h4M14 13h4"/>
-          </svg>
-        </div>
-        <div class="roadmap-label">Work Permit</div>
-        <div class="roadmap-value">Italian<br>(Carta di Soggiorno)</div>
-      </div>
-
-      <div class="roadmap-node">
-        <div class="roadmap-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="7" width="18" height="12" rx="2"/>
-            <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-            <path d="M3 12h18"/>
-          </svg>
-        </div>
-        <div class="roadmap-label">Working Company</div>
-        <div class="roadmap-value">MollFAM Fabbrica Automatica Molle S.r.l.</div>
-      </div>
-
-      <div class="roadmap-node">
-        <div class="roadmap-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 3 2 8l10 5 10-5-10-5Z"/>
-            <path d="M6 10.5V16c0 1.7 2.7 3 6 3s6-1.3 6-3v-5.5"/>
-            <path d="M22 8v6"/>
-          </svg>
-        </div>
-        <div class="roadmap-label">Bachelor's Degree</div>
-        <div class="roadmap-value">Electrical &amp; Electronics Eng. — Vel Tech Univ.</div>
-      </div>
-
-      <div class="roadmap-node">
-        <div class="roadmap-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 3 2 8l10 5 10-5-10-5Z"/>
-            <path d="M6 10.5V16c0 1.7 2.7 3 6 3s6-1.3 6-3v-5.5"/>
-            <path d="M22 8v6"/>
-          </svg>
-        </div>
-        <div class="roadmap-label">Master's Degree</div>
-        <div class="roadmap-value">Robotics Engineering — Univ. of Genoa</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<section class="hero wrap">
+<section class="hero wrap" id="top">
   <div class="hero-grid">
     <div class="hero-main">
+      <div class="eyebrow">Milan, Italy · Available for new opportunities</div>
       <h1>
         Surendra Kumar Reddy Polaka
         <span class="role">Embedded Systems &amp; Robotics Engineer</span>
       </h1>
 
       <p class="lede">
-         Firmware to automation : I have built and developed  industrial clamp control systems, integrated a Mitsubishi RV-2F-D robot for high-speed pick-and-place, and delivered precision torque control over CAN bus — all running in live production environments
+        I build the firmware and control systems that run real machines. At MollFAM I designed an industrial clamp controller with PID force and position control, integrated a Mitsubishi RV-2F-D robot into a high-speed pick-and-place cell, and I am developing CAN-bus torque control for brushless motors. My MSc in Robotics Engineering (University of Genoa) adds ROS, autonomous navigation, computer vision and neural-network safety verification.
       </p>
+
+      <ul class="hero-stats">
+        <li><b>2+ yrs</b><span>Industrial engineering</span></li>
+        <li><b>2</b><span>Systems in live production</span></li>
+        <li><b>8</b><span>Documented projects</span></li>
+        <li><b>MSc</b><span>Robotics Engineering</span></li>
+      </ul>
 
       <div class="hero-cta">
         <a href="#projects" class="btn btn-primary">View Projects</a>
@@ -909,6 +908,80 @@
   </div>
 </section>
 
+<div class="profile-bar">
+  <div class="wrap">
+    <div class="roadmap">
+      <div class="roadmap-node">
+        <div class="roadmap-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 21s-7-7.2-7-12a7 7 0 1 1 14 0c0 4.8-7 12-7 12Z"/>
+            <circle cx="12" cy="9" r="2.5"/>
+          </svg>
+        </div>
+        <div class="roadmap-label">Location</div>
+        <div class="roadmap-value">
+          Milan, Italy
+          <svg class="roadmap-flag" viewBox="0 0 20 14" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="0" width="6.67" height="14" fill="#009246"/>
+            <rect x="6.67" width="6.67" height="14" fill="#fff"/>
+            <rect x="13.33" width="6.67" height="14" fill="#CE2B37"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="roadmap-node">
+        <div class="roadmap-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="5" width="18" height="14" rx="2"/>
+            <circle cx="9" cy="10" r="2"/>
+            <path d="M6 16c0-1.7 1.3-3 3-3s3 1.3 3 3"/>
+            <path d="M14 9h4M14 13h4"/>
+          </svg>
+        </div>
+        <div class="roadmap-label">Work Permit</div>
+        <div class="roadmap-value">Italian<br>(Carta di Soggiorno)</div>
+      </div>
+
+      <div class="roadmap-node">
+        <div class="roadmap-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="7" width="18" height="12" rx="2"/>
+            <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+            <path d="M3 12h18"/>
+          </svg>
+        </div>
+        <div class="roadmap-label">Current Employer</div>
+        <div class="roadmap-value">MollFAM Fabbrica Automatica Molle S.r.l.</div>
+      </div>
+
+      <div class="roadmap-node">
+        <div class="roadmap-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3 2 8l10 5 10-5-10-5Z"/>
+            <path d="M6 10.5V16c0 1.7 2.7 3 6 3s6-1.3 6-3v-5.5"/>
+            <path d="M22 8v6"/>
+          </svg>
+        </div>
+        <div class="roadmap-label">Bachelor's Degree</div>
+        <div class="roadmap-value">Electrical &amp; Electronics Eng. — Vel Tech Univ.</div>
+      </div>
+
+      <div class="roadmap-node">
+        <div class="roadmap-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3 2 8l10 5 10-5-10-5Z"/>
+            <path d="M6 10.5V16c0 1.7 2.7 3 6 3s6-1.3 6-3v-5.5"/>
+            <path d="M22 8v6"/>
+          </svg>
+        </div>
+        <div class="roadmap-label">Master's Degree</div>
+        <div class="roadmap-value">Robotics Engineering — Univ. of Genoa</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <section id="experience" class="wrap">
   <h2 class="section-title"><span class="idx">01 /</span> Experience</h2>
   <div class="timeline">
@@ -944,11 +1017,11 @@
     </div>
 
     <div class="tl-item">
-      <div class="tl-date mono">Genoa,<br>Italy</div>
+      <div class="tl-date mono">Internship</div>
       <div class="tl-marker"></div>
       <div class="tl-body">
         <div class="tl-role">Robotics Engineer Intern</div>
-        <div class="tl-org">Genoa, Italy</div>
+        <div class="tl-org">Kibi project — Genoa, Italy</div>
         <ul>
           <li>Programmed and commissioned robots, with particular focus on collaborative robots, using RESTful APIs.</li>
           <li>Contributed to strategic research on Text-to-Speech synthesis, improving naturalness, expressiveness and efficiency.</li>
@@ -962,6 +1035,12 @@
 
 <section id="projects" class="wrap">
   <h2 class="section-title"><span class="idx">02 /</span> Projects</h2>
+  <p class="section-lede">Industrial systems I built at MollFAM, followed by research and university work. Each card lists the key points, and most include the source code and documents. Click an image to see the full gallery.</p>
+  <div class="proj-filters" role="group" aria-label="Filter projects">
+    <button type="button" class="proj-filter is-active" data-filter="all">All</button>
+    <button type="button" class="proj-filter" data-filter="industrial">Industrial</button>
+    <button type="button" class="proj-filter" data-filter="research">Research &amp; Academic</button>
+  </div>
   <div class="proj-grid" id="projGrid"></div>
 </section>
 
@@ -983,9 +1062,25 @@
       </div>
     </div>
     <div>
+      <div class="skill-group-title">Industrial Automation</div>
+      <div class="skill-chip-row">
+        <span class="chip">Mitsubishi RV-2F-D</span><span class="chip">Keyence Sensors</span>
+        <span class="chip">EPOS 24/5</span><span class="chip">Arduino Uno R4</span>
+        <span class="chip">Touchscreen HMI</span><span class="chip">EEPROM Config</span>
+      </div>
+    </div>
+    <div>
+      <div class="skill-group-title">Robotics Software</div>
+      <div class="skill-chip-row">
+        <span class="chip">ROS</span><span class="chip">SMACH</span><span class="chip">Gazebo</span>
+        <span class="chip">OpenCV</span><span class="chip">SLAM (gmapping)</span><span class="chip">move_base</span>
+        <span class="chip">actionlib</span><span class="chip">URDF / Xacro</span>
+      </div>
+    </div>
+    <div>
       <div class="skill-group-title">Systems &amp; Tools</div>
       <div class="skill-chip-row">
-        <span class="chip">Linux</span><span class="chip">ROS</span><span class="chip">RTOS</span>
+        <span class="chip">Linux</span><span class="chip">RTOS</span>
         <span class="chip">Git / GitHub</span><span class="chip">Microsoft 365 Admin</span>
       </div>
     </div>
@@ -1022,8 +1117,7 @@
       <div class="datasheet-head"><span>LANGUAGE SKILLS</span><span>CEFR</span></div>
       <div style="padding: 6px 18px;">
         <div class="lang-row"><span>English — Listening / Reading / Speaking / Writing</span><span class="lang-level">C2</span></div>
-        <div class="lang-row"><span>Italian — Listening / Reading</span><span class="lang-level">A2</span></div>
-        <div class="lang-row"><span>Italian — Speaking / Writing</span><span class="lang-level">A2</span></div>
+        <div class="lang-row"><span>Italian — Listening / Reading / Speaking / Writing</span><span class="lang-level">A2</span></div>
       </div>
     </div>
   </div>
@@ -1031,6 +1125,7 @@
 
 <footer id="contact" class="wrap">
   <div class="contact-inner">
+    <h2>Let's talk about your next automation or robotics project.</h2>
     <div class="contact-links">
       <a href="mailto:spolaka918@gmail.com">spolaka918@gmail.com</a>
       <a href="tel:+393429438586">+39 342 943 8586</a>
@@ -1055,9 +1150,17 @@
   ------------------------------------------------- */
   const projects = [
     {
-      rev: "PROJECT. 01",
+      rev: "01",
       status: "IN PRODUCTION",
       title: "Industrial Clamp Control System",
+      cat: "industrial",
+      points: [
+        "VNH7012AY H-bridge drives the DC motor; a PID loop closes on Hall-sensor feedback",
+        "Controls both clamping force and position",
+        "Touchscreen HMI built on an ST7789 display and an XPT2046 touch controller",
+        "Configuration stored in EEPROM, so settings survive power cycles",
+        "Running on the MollFAM production floor"
+      ],
       desc: "DC motor clamp control using a VNH7012AY driver with PID control and Hall-sensor feedback for precise force and position control, plus a touchscreen HMI (ST7789 + XPT2046) and EEPROM-backed configuration.",
       tags: ["C/C++", "PID", "VNH7012AY", "EEPROM", "Touchscreen HMI"],
       media: {
@@ -1071,9 +1174,16 @@
       
     },
     {
-      rev: "PROJECT. 02",
+      rev: "02",
       status: "IN PRODUCTION",
       title: "Robotic Pick-and-Place Automation",
+      cat: "industrial",
+      points: [
+        "Mitsubishi RV-2F-D industrial robot integrated into a live production line",
+        "Keyence sensors integrated with the robot to drive the pick-and-place cycle",
+        "Works alongside an Itaya RX40 machine",
+        "High-speed cycle in daily production"
+      ],
       desc: "Integrated a Mitsubishi RV-2F-D industrial robot with Keyence sensors to drive high-speed pick-and-place automation on a live production line with Itaya RX40 Machine",
       tags: ["Mitsubishi RV-2F-D", "Keyence Sensors", "Industrial Robotics"],
       media: {
@@ -1084,9 +1194,16 @@
       }
     },
     {
-      rev: "PROJECT. 03",
+      rev: "03",
       status: "IN DEVELOPMENT",
       title: "CAN-Bus Brushless Torque Control",
+      cat: "industrial",
+      points: [
+        "EPOS 24/5 motion controller drives the brushless motor",
+        "Commands sent over CAN bus from an Arduino Uno R4",
+        "Goal: precise, repeatable torque control",
+        "Currently in development"
+      ],
       desc: "Brushless motor control system built around an EPOS 24/5 controller communicating over CAN bus, interfaced with an Arduino Uno R4 for precise torque control.",
       tags: ["CAN Bus", "EPOS 24/5", "BLDC", "Arduino Uno R4"],
       media: {
@@ -1102,9 +1219,15 @@
       }
     },
     {
-      rev: "PROJECT. 04",
+      rev: "04",
       status: "MSc THESIS",
       title: "Neural Network Verification for Safe RL",
+      cat: "research",
+      points: [
+        "Verified safety properties of reinforcement-learning policies with the NeVer2 tool",
+        "Built and trained models in PyTorch and TensorFlow",
+        "Data processing with NumPy, Pandas and SciPy"
+      ],
       desc: "Master's thesis on verifying the safety of reinforcement-learning policies using the NeVer2 tool — building, training and analyzing deep learning models in PyTorch and TensorFlow.",
       tags: ["PyTorch", "TensorFlow", "NeVer2", "Reinforcement Learning"],
       media: {
@@ -1115,9 +1238,15 @@
       }      
     },
     {
-      rev: "PROJECT. 05",
+      rev: "05",
       status: "RESEARCH",
       title: "Kibi — Assistive Virtual Assistant",
+      cat: "research",
+      points: [
+        "Improved the dialog management system for more natural, personalised conversations",
+        "Researched Text-to-Speech synthesis: naturalness, expressiveness and efficiency",
+        "Programmed collaborative robots through RESTful APIs"
+      ],
       desc: "A sensor-driven virtual assistant for elderly and special-needs users. Contributed to dialog management and Text-to-Speech research to make interactions more natural and personalized.",
       tags: ["RESTful API", "Text-to-Speech", "Collaborative Robots"],
       media: { 
@@ -1133,10 +1262,17 @@
       ]
     },
     {
-      rev: "PROJECT. 06",
-      status: "UNIVERSITY",
+      rev: "06",
+      status: "MSc COURSEWORK",
       title: "Pet Robot Behavioural Architecture — ROS & SMACH",
-      desc: "A ROS behavioural architecture for a pet robot that interacts with a human in an 11x11 grid world. A SMACH state machine switches between Normal (random wandering), Sleep (return home and rest) and Play (go to the person, follow a pointing gesture, come back). Three Python nodes talk over ROS topics: a Commander that simulates the user's speech and gestures, the state machine, and a Display node that simulates the robot.",
+      cat: "research",
+      desc: "Behavioural architecture for a pet robot that interacts with a person on an 11×11 grid. Step 1 of a three-part series (projects 06 → 08).",
+      points: [
+        "SMACH state machine with three behaviours: Normal, Sleep and Play",
+        "Play: go to the person, follow their pointing gesture, then come back",
+        "Three ROS nodes: Commander (simulated user), state machine, Display (simulated robot)",
+        "The design that projects 07 and 08 build on"
+      ],
       tags: ["ROS", "Python", "SMACH", "Finite State Machine", "rqt_graph"],
       media: {
         type: "gallery",
@@ -1155,10 +1291,18 @@
       ]
     },
     {
-      rev: "PROJECT. 07",
-      status: "UNIVERSITY",
+      rev: "07",
+      status: "MSc COURSEWORK",
       title: "Ball-Tracking Pet Robot — ROS & Gazebo",
-      desc: "The pet-robot architecture moved into a Gazebo simulation: a wheeled dog robot with a neck and a rotating camera head. A SMACH state machine switches between Normal (random moves via an action server), Play (tracks the ball with the camera, then sweeps its head left, right and centre) and Sleep (returns home). A Person node moves or hides the ball independently, so the robot reacts on its own. Motion uses ROS actions, so goals can be cancelled and give live feedback; the two go-to-point action servers were provided and tuned.",
+      cat: "research",
+      desc: "The same pet-robot behaviour on a simulated wheeled dog robot in Gazebo, with a camera head that can turn. Step 2 of the series.",
+      points: [
+        "Play state: tracks a ball with the camera, then sweeps the head left, right and centre",
+        "Motion through ROS action servers, so goals can be cancelled and report progress",
+        "Independent Person node moves or hides the ball; the robot reacts on its own",
+        "Robot modelled in URDF/Xacro, with ROS controllers for the head joint",
+        "Go-to-point action servers were provided by the course; I tuned their gains"
+      ],
       tags: ["ROS", "Python", "SMACH", "Gazebo", "actionlib", "URDF / Xacro", "OpenCV"],
       media: {
         type: "gallery",
@@ -1182,10 +1326,18 @@
       ]
     },
     {
-      rev: "PROJECT. 08",
-      status: "UNIVERSITY",
+      rev: "08",
+      status: "MSc COURSEWORK",
       title: "Autonomous Robot Dog — ROS Navigation & Vision",
-      desc: "ROS Melodic simulation of a differential-drive dog robot that explores a 6-room house in Gazebo. A SMACH state machine (Normal, Sleep, Play, Find) drives its behaviour: OpenCV detects coloured balls to learn each room's location, gmapping builds the map with laser SLAM, move_base plans obstacle-free paths, and explore-lite does frontier exploration to find rooms it hasn't seen yet when a human commands \"GoTo &lt;room&gt;\".",
+      cat: "research",
+      desc: "A fully autonomous dog robot that maps a six-room house in Gazebo, learns where each room is, and goes there when a person says \"GoTo &lt;room&gt;\". Step 3 of the series.",
+      points: [
+        "Four behaviours in SMACH: Normal, Sleep, Play and Find",
+        "OpenCV ball detection: each coloured ball marks a room",
+        "Laser SLAM with gmapping; path planning and obstacle avoidance with move_base",
+        "explore-lite frontier exploration to find rooms it has not seen yet",
+        "Custom ROS message carries ball data from the vision node to the state machine"
+      ],
       tags: ["ROS", "Python", "SMACH", "OpenCV", "SLAM / gmapping", "move_base", "Gazebo", "URDF"],
       media: {
         type: "gallery",
@@ -1213,7 +1365,7 @@
     }
     /*
     {
-      rev: "PROJECT. 06",
+      rev: "06",
       status: "UNIVERSITY",
       title: "EMG-Based Analysis of Motor Adaptation to a Force Field",
       desc: "Analyzed muscle activity and hand-movement trajectories during a robotic reaching task to quantify how motor adaptation and after-effects emerge under a novel force field.",
@@ -1412,6 +1564,7 @@
   projects.forEach((p, i) => {
     const card = document.createElement('div');
     card.className = 'proj-card';
+    card.dataset.cat = p.cat || 'research';
 
     let mediaInner = `<span class="placeholder-tag">+ ADD PHOTO / VIDEO</span>`;
     let hasMedia = false;
@@ -1423,7 +1576,7 @@
       hasMedia = true;
     } else if (p.media.type === 'gallery' && p.media.images && p.media.images.length) {
       mediaInner = `<img src="${p.media.images[0].src}" alt="${p.title}">
-        <span class="media-count mono">${p.media.images.length} photos</span>
+        <span class="media-count mono">${p.media.images.length} ${p.media.images.length === 1 ? 'image' : 'images'}</span>
         <span class="expand-hint">Expand</span>`;
       hasMedia = true;
     }
@@ -1441,12 +1594,21 @@
         </div>
         <div class="proj-status"><i></i>${p.status}</div>
         <div class="proj-desc">${p.desc}</div>
+        ${p.points ? `<ul class="proj-points">${p.points.map(pt => `<li>${pt}</li>`).join('')}</ul>` : ''}
         ${linkHtml}
         ${renderFiles(p)}
         <div class="proj-tags">${p.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
       </div>
     `;
     grid.appendChild(card);
+  });
+
+  document.querySelectorAll('.proj-filter').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.proj-filter').forEach(b => b.classList.toggle('is-active', b === btn));
+      const f = btn.dataset.filter;
+      grid.querySelectorAll('.proj-card').forEach(c => { c.hidden = f !== 'all' && c.dataset.cat !== f; });
+    });
   });
 
   // Lightbox
