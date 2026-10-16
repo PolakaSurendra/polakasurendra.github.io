@@ -1157,6 +1157,33 @@
     {
       rev: "PROJECT. 07",
       status: "UNIVERSITY",
+      title: "Ball-Tracking Pet Robot — ROS & Gazebo",
+      desc: "The pet-robot architecture moved into a Gazebo simulation: a wheeled dog robot with a neck and a rotating camera head. A SMACH state machine switches between Normal (random moves via an action server), Play (tracks the ball with the camera, then sweeps its head left, right and centre) and Sleep (returns home). A Person node moves or hides the ball independently, so the robot reacts on its own. Motion uses ROS actions, so goals can be cancelled and give live feedback; the two go-to-point action servers were provided and tuned.",
+      tags: ["ROS", "Python", "SMACH", "Gazebo", "actionlib", "URDF / Xacro", "OpenCV"],
+      media: {
+        type: "gallery",
+        images: [
+          { src: "projects/pet-robot-gazebo/diagrams/State_Diagram.png",     caption: "State diagram" },
+          { src: "projects/pet-robot-gazebo/diagrams/Component_Diagram.png", caption: "Component diagram" },
+          { src: "projects/pet-robot-gazebo/diagrams/rosgraph.png",          caption: "rqt_graph" }
+        ]
+      },
+      files: [
+        { path: "projects/pet-robot-gazebo/demo.mov", note: "Demo video" },
+        { path: "projects/pet-robot-gazebo/README.md", note: "Full write-up" },
+        { path: "projects/pet-robot-gazebo/scripts/state_machine.py", note: "SMACH state machine" },
+        { path: "projects/pet-robot-gazebo/scripts/person.py", note: "Person moving the ball" },
+        { path: "projects/pet-robot-gazebo/scripts/go_to_point_robot.py", note: "Robot action server" },
+        { path: "projects/pet-robot-gazebo/scripts/go_to_point_ball.py", note: "Ball action server" },
+        { path: "projects/pet-robot-gazebo/action/Planning.action", note: "Custom action" },
+        { path: "projects/pet-robot-gazebo/launch/gazebo_world.launch" },
+        { path: "projects/pet-robot-gazebo/urdf/robot.xacro", note: "Robot model" },
+        { path: "projects/pet-robot-gazebo/config/motors_config.yaml", note: "Joint controllers" }
+      ]
+    },
+    {
+      rev: "PROJECT. 08",
+      status: "UNIVERSITY",
       title: "Autonomous Robot Dog — ROS Navigation & Vision",
       desc: "ROS Melodic simulation of a differential-drive dog robot that explores a 6-room house in Gazebo. A SMACH state machine (Normal, Sleep, Play, Find) drives its behaviour: OpenCV detects coloured balls to learn each room's location, gmapping builds the map with laser SLAM, move_base plans obstacle-free paths, and explore-lite does frontier exploration to find rooms it hasn't seen yet when a human commands \"GoTo &lt;room&gt;\".",
       tags: ["ROS", "Python", "SMACH", "OpenCV", "SLAM / gmapping", "move_base", "Gazebo", "URDF"],
@@ -1256,7 +1283,7 @@
     txt: 'plain', md: 'plain', csv: 'plain', log: 'plain',
     yml: 'plain', yaml: 'plain', ini: 'plain', cfg: 'plain',
     html: 'plain', css: 'plain', xml: 'plain',
-    launch: 'plain', urdf: 'plain', xacro: 'plain', gazebo: 'plain', world: 'plain', msg: 'plain'
+    launch: 'plain', urdf: 'plain', xacro: 'plain', gazebo: 'plain', world: 'plain', msg: 'plain', action: 'plain'
   };
 
   // The browser already renders these well on its own.
