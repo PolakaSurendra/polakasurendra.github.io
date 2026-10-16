@@ -1135,6 +1135,28 @@
     {
       rev: "PROJECT. 06",
       status: "UNIVERSITY",
+      title: "Pet Robot Behavioural Architecture — ROS & SMACH",
+      desc: "A ROS behavioural architecture for a pet robot that interacts with a human in an 11x11 grid world. A SMACH state machine switches between Normal (random wandering), Sleep (return home and rest) and Play (go to the person, follow a pointing gesture, come back). Three Python nodes talk over ROS topics: a Commander that simulates the user's speech and gestures, the state machine, and a Display node that simulates the robot.",
+      tags: ["ROS", "Python", "SMACH", "Finite State Machine", "rqt_graph"],
+      media: {
+        type: "gallery",
+        images: [
+          { src: "projects/pet-robot-fsm/Images/graph1.png", caption: "rqt_graph — node architecture" },
+          { src: "projects/pet-robot-fsm/Images/graph2.png", caption: "rqt_graph — topics" }
+        ]
+      },
+      files: [
+        { path: "projects/pet-robot-fsm/demo.mov", note: "Demo video" },
+        { path: "projects/pet-robot-fsm/README.md", note: "Full write-up" },
+        { path: "projects/pet-robot-fsm/src/state_machine.py", note: "SMACH state machine" },
+        { path: "projects/pet-robot-fsm/src/Commander.py", note: "Simulated user commands" },
+        { path: "projects/pet-robot-fsm/src/Display.py", note: "Robot simulator" },
+        { path: "projects/pet-robot-fsm/src/launch/ass1.launch" }
+      ]
+    },
+    {
+      rev: "PROJECT. 07",
+      status: "UNIVERSITY",
       title: "Autonomous Robot Dog — ROS Navigation & Vision",
       desc: "ROS Melodic simulation of a differential-drive dog robot that explores a 6-room house in Gazebo. A SMACH state machine (Normal, Sleep, Play, Find) drives its behaviour: OpenCV detects coloured balls to learn each room's location, gmapping builds the map with laser SLAM, move_base plans obstacle-free paths, and explore-lite does frontier exploration to find rooms it hasn't seen yet when a human commands \"GoTo &lt;room&gt;\".",
       tags: ["ROS", "Python", "SMACH", "OpenCV", "SLAM / gmapping", "move_base", "Gazebo", "URDF"],
@@ -1238,7 +1260,7 @@
   };
 
   // The browser already renders these well on its own.
-  const OPEN_IN_TAB = ['pdf', 'png', 'jpg', 'jpeg', 'gif', 'svg', 'webp', 'mp4', 'webm', 'mp3', 'wav', 'ogg'];
+  const OPEN_IN_TAB = ['pdf', 'png', 'jpg', 'jpeg', 'gif', 'svg', 'webp', 'mp4', 'webm', 'mov', 'mp3', 'wav', 'ogg'];
 
   const MAX_VIEW_CHARS = 400 * 1024;
   let currentCodeText = '';
