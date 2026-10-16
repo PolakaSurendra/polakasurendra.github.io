@@ -1131,6 +1131,36 @@
         {  path: "projects/kibi/code/main.py" },
         {  path: "projects/kibi/Test.mp4"  }
       ]
+    },
+    {
+      rev: "PROJECT. 06",
+      status: "UNIVERSITY",
+      title: "Autonomous Robot Dog — ROS Navigation & Vision",
+      desc: "ROS Melodic simulation of a differential-drive dog robot that explores a 6-room house in Gazebo. A SMACH state machine (Normal, Sleep, Play, Find) drives its behaviour: OpenCV detects coloured balls to learn each room's location, gmapping builds the map with laser SLAM, move_base plans obstacle-free paths, and explore-lite does frontier exploration to find rooms it hasn't seen yet when a human commands \"GoTo &lt;room&gt;\".",
+      tags: ["ROS", "Python", "SMACH", "OpenCV", "SLAM / gmapping", "move_base", "Gazebo", "URDF"],
+      media: {
+        type: "gallery",
+        images: [
+          { src: "projects/robot-dog-ros/images/MainStateMachine.png", caption: "Main state machine" },
+          { src: "projects/robot-dog-ros/images/NormalContainer.png",  caption: "Normal container" },
+          { src: "projects/robot-dog-ros/images/FindContainer.png",    caption: "Find container" },
+          { src: "projects/robot-dog-ros/images/RobotURDF.png",        caption: "Robot URDF model" }
+        ]
+      },
+      files: [
+        { path: "projects/robot-dog-ros/README.md", note: "Full write-up" },
+        { path: "projects/robot-dog-ros/scripts/State_Machine.py", note: "SMACH state machine" },
+        { path: "projects/robot-dog-ros/scripts/camera_processing.py", note: "OpenCV ball detection" },
+        { path: "projects/robot-dog-ros/scripts/Commander.py", note: "Simulated human commands" },
+        { path: "projects/robot-dog-ros/msg/BallInfoMsg.msg", note: "Custom ROS message" },
+        { path: "projects/robot-dog-ros/launch/simulation.launch" },
+        { path: "projects/robot-dog-ros/launch/move_base.launch" },
+        { path: "projects/robot-dog-ros/launch/gmapping.launch" },
+        { path: "projects/robot-dog-ros/urdf/robot.xacro", note: "Robot model" },
+        { path: "projects/robot-dog-ros/urdf/robot_xacro.pdf", note: "URDF tree" },
+        { path: "projects/robot-dog-ros/param/move_base_params.yaml" },
+        { path: "projects/robot-dog-ros/param/costmap_common_params.yaml" }
+      ]
     }
     /*
     {
@@ -1203,7 +1233,8 @@
     sh: 'shell', bash: 'shell',
     txt: 'plain', md: 'plain', csv: 'plain', log: 'plain',
     yml: 'plain', yaml: 'plain', ini: 'plain', cfg: 'plain',
-    html: 'plain', css: 'plain', xml: 'plain'
+    html: 'plain', css: 'plain', xml: 'plain',
+    launch: 'plain', urdf: 'plain', xacro: 'plain', gazebo: 'plain', world: 'plain', msg: 'plain'
   };
 
   // The browser already renders these well on its own.
