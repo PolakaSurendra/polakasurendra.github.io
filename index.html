@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Surendra Kumar Reddy Polaka — Embedded Systems & Robotics Engineer</title>
-<meta name="description" content="Portfolio of Surendra Kumar Reddy Polaka — embedded firmware, industrial robotics and AI safety verification projects.">
+<meta name="description" content="Portfolio of Surendra Kumar Reddy Polaka — embedded firmware, motor control and industrial automation projects.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Surendra Kumar Reddy Polaka — Embedded Systems & Robotics Engineer">
-<meta property="og:description" content="Embedded firmware, industrial robotics, ROS and AI safety verification projects. Milan, Italy.">
+<meta property="og:description" content="Embedded firmware, motor control and industrial automation projects. Milan, Italy.">
 <meta property="og:url" content="https://polakasurendra.github.io/">
 <meta name="theme-color" content="#12151a">
 
@@ -969,13 +969,13 @@
       </h1>
 
       <p class="lede">
-        I build the firmware and control systems that run real machines. At MollFAM I designed an industrial clamp controller with PID force and position control, integrated a Mitsubishi RV-2F-D robot into a high-speed pick-and-place cell, and I am developing CAN-bus torque control for brushless motors. My MSc in Robotics Engineering (University of Genoa) adds ROS, autonomous navigation, computer vision and neural-network safety verification.
+        I build the firmware and control systems that run real machines. At MollFAM I develop and maintain the firmware of an industrial clamp controller (interrupt-driven force and position control, calibration, EEPROM configuration, safety limits), integrated a Mitsubishi RV-2F-D robot into a high-speed pick-and-place cell, and I am developing CAN-bus torque control for brushless motors. MSc in Robotics Engineering, University of Genoa.
       </p>
 
       <ul class="hero-stats">
         <li><b>2+ yrs</b><span>Industrial engineering</span></li>
         <li><b>2</b><span>Systems in live production</span></li>
-        <li><b>8</b><span>Documented projects</span></li>
+        <li><b>3</b><span>Industrial projects</span></li>
         <li><b>MSc</b><span>Robotics Engineering</span></li>
       </ul>
 
@@ -1134,7 +1134,7 @@
         <div class="tl-org">MOLLFAM Fabbrica Automatica Srl — Milan, Italy</div>
         <ul>
           <li>Developed industrial clamp control firmware integrating motor drivers, encoder feedback, EEPROM configuration and a touchscreen interface (ST7789 + XPT2046).</li>
-          <li>Designed a DC motor clamp control system using a VNHD7012AY driver, implementing PID control with Hall-sensor feedback for accurate force and position control.</li>
+          <li>Develop and maintain a DC motor clamp control system using a VNHD7012AY driver: encoder-based position control and current-sense force limiting in a timer interrupt, with calibration routines and safety limits.</li>
           <li>Integrated a Mitsubishi RV‑2F‑D industrial robot with Keyence sensors for high-speed pick-and-place automation in production.</li>
           <li>Developing a brushless motor control system using EPOS 24/5 over CAN bus, interfacing with an Arduino Uno R4 for precise torque control.</li>
           <li>Manage Microsoft 365 administration and IT support, resolving connectivity, network and software issues across the company.</li>
@@ -1156,6 +1156,7 @@
       </div>
     </div>
 
+    <!-- Hidden for now (Kibi internship):
     <div class="tl-item">
       <div class="tl-date mono">Internship</div>
       <div class="tl-marker"></div>
@@ -1170,17 +1171,14 @@
       </div>
     </div>
 
+    -->
+
   </div>
 </section>
 
 <section id="projects" class="wrap">
   <h2 class="section-title"><span class="idx">02 /</span> Projects</h2>
-  <p class="section-lede">Industrial systems I built at MollFAM, followed by research and university work. Each card lists the key points. Open <b>Explore project</b> to see how the system works, the design decisions behind it, and the source code and documents.</p>
-  <div class="proj-filters" role="group" aria-label="Filter projects">
-    <button type="button" class="proj-filter is-active" data-filter="all">All</button>
-    <button type="button" class="proj-filter" data-filter="industrial">Industrial</button>
-    <button type="button" class="proj-filter" data-filter="research">Research &amp; Academic</button>
-  </div>
+  <p class="section-lede">Industrial systems I work on at MollFAM. Each card lists the key points. Open <b>Explore project</b> to see how the system works, the design decisions behind it, and the source code and documents.</p>
   <div class="proj-grid" id="projGrid"></div>
 </section>
 
@@ -1209,6 +1207,7 @@
         <span class="chip">Touchscreen HMI</span><span class="chip">EEPROM Config</span>
       </div>
     </div>
+    <!-- Hidden for now (Robotics Software):
     <div>
       <div class="skill-group-title">Robotics Software</div>
       <div class="skill-chip-row">
@@ -1217,6 +1216,7 @@
         <span class="chip">actionlib</span><span class="chip">URDF / Xacro</span>
       </div>
     </div>
+    -->
     <div>
       <div class="skill-group-title">Systems &amp; Tools</div>
       <div class="skill-chip-row">
@@ -1291,21 +1291,21 @@
   /* ---------------- PROJECT DATA ----------------
    
   ------------------------------------------------- */
-  const projects = [
+  const allProjects = [
     {
       rev: "01",
       status: "IN PRODUCTION",
       title: "Industrial Clamp Control System",
       cat: "industrial",
       points: [
-        "VNHD7012AY H-bridge drives the DC motor; a PID loop closes on Hall-sensor feedback",
-        "Controls both clamping force and position",
+        "VNHD7012AY H-bridge drives the DC motor; quadrature encoder on interrupts for position, motor-current sensing for force",
+        "Controls clamping force and position with calibrated force limits, stall detection and a watchdog",
         "Touchscreen HMI built on an ST7789 display and an XPT2046 touch controller",
         "Configuration stored in EEPROM, so settings survive power cycles",
         "Running on the MollFAM production floor"
       ],
-      desc: "DC motor clamp control using a VNHD7012AY driver with PID control and Hall-sensor feedback for precise force and position control, plus a touchscreen HMI (ST7789 + XPT2046) and EEPROM-backed configuration.",
-      tags: ["C/C++", "PID", "VNHD7012AY", "EEPROM", "Touchscreen HMI"],
+      desc: "DC motor clamp control on an Arduino Mega using a VNHD7012AY driver, a quadrature encoder for position and motor-current sensing for force, with force and gap calibration, a touchscreen HMI (ST7789 + XPT2046) and EEPROM-backed configuration.",
+      tags: ["C/C++", "Timer ISR", "Encoder", "VNHD7012AY", "EEPROM", "Touchscreen HMI"],
       media: {
         type: "gallery",
         images: [
@@ -1849,6 +1849,9 @@
       <ul class="file-list">${items}</ul>
     </details>`;
   }
+
+  // Tailored view: show only the industrial / firmware projects. Remove this filter to show everything again.
+  const projects = allProjects.filter(p => p.cat === 'industrial');
 
   projects.forEach((p, i) => {
     const card = document.createElement('div');
